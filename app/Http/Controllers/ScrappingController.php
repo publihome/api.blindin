@@ -70,10 +70,7 @@ class ScrappingController extends Controller
 
         DB::table('noticias')->insert($noticias);
         });
-
-
-
-        public function 
+ 
 
     }
 }
