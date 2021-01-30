@@ -42,6 +42,7 @@ class ScrappingController extends Controller
         return $data;
 
 
+
         // $this->noticiasModel->saveNew($array);
 
     }
@@ -68,10 +69,11 @@ class ScrappingController extends Controller
             $noticias["img"] = "";
 
         DB::table('noticias')->insert($noticias);
-
-            
-           
         });
+
+
+
+        public function 
 
     }
 }
