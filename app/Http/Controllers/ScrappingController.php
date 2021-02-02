@@ -17,29 +17,14 @@ class ScrappingController extends Controller
     }
 
     public function index(Client $client) {
-        $crawler = $client->request('GET', 'https://www.nvinoticias.com/oaxaca');
-        $data = $crawler->filter('.note-destacadas')->each(function($node) {
-            $titulo = $node->filter("div > div > h2 > a")->text();
-            $ancla = $node->filter("div > div > h2 > a");              
-            // $resumen = $node->filter("div > div > h2");             
-            // print $titulo."<br>";
 
-            
-            // var_dump($titulo);
-        });
+        $imparcial = $this->imparcial($client);
+        // $rotativo = $this->rotativo($client);
+        // $tiempo = $this->tiempo($client);
+        // return json_encode(array_merge($imparcial,$rotativo,$tiempo));
 
-        
-        $array = array(
-            "titulo" => "nose",
-            "resumen" => "nose",
-            "autor" => "nose",
-            "fecha" => date("Y:m:d"),
-            "categoria" => "nose",
-            "url" => "nose",
-            "img" => "nose jajajajajaj",
-        );
-        $data = DB::table('noticias')->get();
-        return $data;
+        // $data = DB::table('noticias')->get();
+        // return $data;
 
 
 
@@ -49,28 +34,78 @@ class ScrappingController extends Controller
 
     public function imparcial(Client $client) {
         $crawler = $client->request('GET', 'https://imparcialoaxaca.mx/ultima-hora/');
-        $data = $crawler->filter(".post-content")->each(function($node) {
-            $noticias = [];
+        $data = $crawler->filter(".article-post")->each(function($node) {
+            // $noticias = [];
             $titleNew = $node->filter(".post-content > h2" )->text();
-            $author = $node->filter(".post-content > ul > li")->text(1);
+            $author = $node->filter(".post-content > ul > li")->eq(0)->text();
+            $date = $node->filter(".post-content > ul > li")->eq(1)->text();
             $resumen = $node->filter(".post-content")->text();
             $enlace = $node->filter(".post-content > a")->attr("href");
-            // $imagen = $node->filter(".post-content > img")->attr("src");
-            //$image = $node->selectImage("lazy")->image();
-            //var_dump($image);
-
+            $image = $node->filter("img")->attr("src");
+            $textoinfo = explode($date,$resumen);
+            
 
             $noticias["titulo"] = $titleNew;
-            $noticias["resumen"] = $resumen;
+            $noticias["fecha"] = $date;
+            $noticias["resumen"] = trim($textoinfo[1]);
             $noticias["autor"] = $author;
-            $noticias["fecha"] = date("Y:m:d");
             $noticias["categoria"] = "Reciente";
             $noticias["url"] = $enlace;
-            $noticias["img"] = "";
+            $noticias["img"] = $image;
 
-        DB::table('noticias')->insert($noticias);
+            // return $noticias;
+            var_dump($noticias);
+
+        // DB::table('noticias')->insert($noticias);
         });
- 
+     }
+
+     public function rotativo(Client $client) {
+        $crawler = $client->request('GET', 'http://www.rotativooaxaca.com.mx/');
+        $crawler->filter('.single-post')->each(function($node) {
+            $noticias = array();
+
+            $title = $node->filter(".post-title > a")->text();
+            $resumen = $node->filter(".entry > p")->text();
+            $enlace = $node->filter(".entry > a")->attr("href");
+            $image = $node->filter("img")->attr("src");
+            
+            
+            $noticias["titulo"] = $title;
+            $noticias["resumen"] = $resumen;
+            $noticias["categoria"] = "Reciente";
+            $noticias["url"] = $enlace;
+            $noticias["img"] = $image;
+
+            // return $noticias;
+
+            var_dump($noticias);
+        });
 
     }
+
+
+    public function tiempo(Client $client) {
+        $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/oaxaca/');
+        $crawler->filter('.td_module_1')->each(function($node) {
+            $noticias = array();
+
+            $title = $node->filter(".entry-title")->text();
+            // $resumen = $node->filter(".entry > p")->text();
+            $enlace = $node->filter(".entry-title > a")->attr("href");
+            $image = $node->filter("img")->attr("src");
+
+            $noticias["titulo"] = $title;
+            // $noticias["resumen"] = $resumen;
+            $noticias["url"] = $enlace;
+            $noticias["img"] = $image;
+            $noticias["categoria"] = "Reciente";
+
+            // return $noticias;
+            var_dump($noticias);
+        });
+
+    }
+
+
 }

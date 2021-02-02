@@ -17,3 +17,5 @@ use App\Http\Controllers\ScrappingController;
 
 Route::get('/', [ScrappingController::class, 'index']);
 Route::get('/noticias2', [ScrappingController::class, 'imparcial']);
+Route::get('/noticias3', [ScrappingController::class, 'rotativo']);
+Route::get('/noticias4', [ScrappingController::class, 'tiempo']);
