@@ -19,9 +19,9 @@ class ScrappingController extends Controller
     public function index(Client $client) {
 
         $imparcial = $this->imparcial($client);
-        // $rotativo = $this->rotativo($client);
-        // $tiempo = $this->tiempo($client);
-        // return json_encode(array_merge($imparcial,$rotativo,$tiempo));
+        $tiempo = $this->tiempo($client);
+        $rotativo = $this->rotativo($client);
+        return json_encode(array_merge($imparcial,$rotativo,$tiempo));
 
         // $data = DB::table('noticias')->get();
         // return $data;
@@ -62,13 +62,14 @@ class ScrappingController extends Controller
 
      public function rotativo(Client $client) {
         $crawler = $client->request('GET', 'http://www.rotativooaxaca.com.mx/');
-        $crawler->filter('.single-post')->each(function($node) {
+        $crawler->filter('.category-mas-informacion')->each(function($node) {
             $noticias = array();
 
             $title = $node->filter(".post-title > a")->text();
             $resumen = $node->filter(".entry > p")->text();
-            $enlace = $node->filter(".entry > a")->attr("href");
+            $enlace = $node->filter(".entry > a")->attr("href");           
             $image = $node->filter("img")->attr("src");
+
             
             
             $noticias["titulo"] = $title;
