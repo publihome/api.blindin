@@ -12,30 +12,30 @@ class ScrappingController extends Controller
     //
 
     public function __constructor(){
-        // $this->Models("noticiasModel");
+        $this->Models("noticiasModel");
 
     }
 
     public function index(Client $client) {
 
-        $imparcial = $this->imparcial($client);
-        $tiempo = $this->tiempo($client);
-        $rotativo = $this->rotativo($client);
-        return json_encode(array_merge($imparcial,$rotativo,$tiempo));
+         $imparcial = $this->imparcial($client);
+        //  $tiempo = $this->tiempo($client);
+        //  $rotativo = $this->rotativo($client);
+        // return json_encode(array_merge($imparcial,$rotativo,$tiempo));
 
-        // $data = DB::table('noticias')->get();
-        // return $data;
-
-
+        // return $imparcial;
 
         // $this->noticiasModel->saveNew($array);
+        $data = DB::table('noticias')->paginate(5);
+        return json_encode($data);
 
     }
 
     public function imparcial(Client $client) {
         $crawler = $client->request('GET', 'https://imparcialoaxaca.mx/ultima-hora/');
+
         $data = $crawler->filter(".article-post")->each(function($node) {
-            // $noticias = [];
+            $noticias = array();
             $titleNew = $node->filter(".post-content > h2" )->text();
             $author = $node->filter(".post-content > ul > li")->eq(0)->text();
             $date = $node->filter(".post-content > ul > li")->eq(1)->text();
@@ -43,21 +43,29 @@ class ScrappingController extends Controller
             $enlace = $node->filter(".post-content > a")->attr("href");
             $image = $node->filter("img")->attr("src");
             $textoinfo = explode($date,$resumen);
-            
 
             $noticias["titulo"] = $titleNew;
-            $noticias["fecha"] = $date;
+            $noticias["fecha"] = date("Y:m:d");
             $noticias["resumen"] = trim($textoinfo[1]);
             $noticias["autor"] = $author;
             $noticias["categoria"] = "Reciente";
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
+            $noticias["img"] = $image;   
+            
+            return $noticias;
 
-            // return $noticias;
-            var_dump($noticias);
-
-        // DB::table('noticias')->insert($noticias);
+            // 
+            
+            
         });
+
+        foreach ($data as $not) {
+             # code...
+            if (DB::table('noticias')->where('resumen',$not["resumen"] )->doesntExist()) {
+                $data = DB::table('noticias')->insert($not);
+            }
+        }
+
      }
 
      public function rotativo(Client $client) {
@@ -67,20 +75,25 @@ class ScrappingController extends Controller
 
             $title = $node->filter(".post-title > a")->text();
             $resumen = $node->filter(".entry > p")->text();
-            $enlace = $node->filter(".entry > a")->attr("href");           
+            $enlace = $node->filter(".entry > a")->attr("href");
             $image = $node->filter("img")->attr("src");
 
-            
-            
+
+
             $noticias["titulo"] = $title;
             $noticias["resumen"] = $resumen;
             $noticias["categoria"] = "Reciente";
+            $noticias["autor"] = "";
+            $noticias["fecha"] = date("Y:m:d");
+
             $noticias["url"] = $enlace;
             $noticias["img"] = $image;
 
             // return $noticias;
+            $data = DB::table('noticias')->insert($noticias);
 
-            var_dump($noticias);
+
+            // var_dump($noticias);
         });
 
     }
