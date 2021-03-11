@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ScrappingController;
-
+use App\Http\Controllers\ScrappingNacionalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,3 +19,4 @@ Route::get('/', [ScrappingController::class, 'index']);
 Route::get('/noticias2', [ScrappingController::class, 'imparcial']);
 Route::get('/noticias3', [ScrappingController::class, 'rotativo']);
 Route::get('/noticias4', [ScrappingController::class, 'tiempo']);
+Route::get('/nacionales', [ScrappingNacionalController::class, 'altoNivelRecientes']);
