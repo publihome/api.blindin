@@ -44,3 +44,4 @@ Route::get("/search/{word}",[ScrappingController::class, 'searchNew']);
 
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
 Route::get("/nacionales",[ScrappingNacionalController::class, 'index']);
+Route::get("/s",[ScrappingController::class, 'milenioHealth']);

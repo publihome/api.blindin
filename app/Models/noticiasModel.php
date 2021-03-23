@@ -73,11 +73,11 @@ class NoticiasModel extends Model
 
     public function searchNew($word){
         $new = DB::table("noticias")
-                    ->where("titulo", "like", $word."%")
-                    ->orWhere("resumen", "like", $word."%")
-                    ->orWhere("diario", "like", $word."%")
-                    ->orWhere("region", "like", $word."%")
-                    ->orWhere("tipo", "like", $word."%")
+                    ->where("titulo", "like", '%'.$word."%")
+                    ->orWhere("resumen", "like", '%'.$word."%")
+                    ->orWhere("diario", "like", '%'.$word."%")
+                    ->orWhere("region", "like", '%'.$word."%")
+                    ->orWhere("tipo", "like", '%'.$word."%")
                     ->orderBy("fecha","desc")
                     ->orderBy("hora","desc")
                     ->paginate(6);

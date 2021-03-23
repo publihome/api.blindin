@@ -115,14 +115,14 @@ class ScrappingController extends Controller
             $health["img"] = $image;  
             $health["region"] = "oaxaca"; 
             $health["tipo"] = "secundarias"; 
-
-
-            return $health;
-            
+            var_dump($health);
+            return $health;            
         });
 
         $this->insertData($data);
      }
+     
+
 
      public function imparcialEconomy(Client $client) {
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/economia/');
@@ -189,6 +189,34 @@ class ScrappingController extends Controller
 
     }
 
+    public function rotativoEconomy(Client $client) {
+        $crawler = $client->request('GET', 'http://www.rotativooaxaca.com.mx/');
+        $data =  $crawler->filter('.category-mas-informacion')->each(function($node) {
+            $noticias = array();
+
+            $title = $node->filter(".post-title > a")->text();
+            $resumen = $node->filter(".entry > p")->text();
+            $enlace = $node->filter(".entry > a")->attr("href");
+            $image = $node->filter("img")->attr("src");
+            $noticias["titulo"] = $title;
+            $noticias["resumen"] = $resumen;
+            $noticias["categoria"] = "Reciente";
+            $noticias["fecha"] = date("Y:m:d");
+            $noticias["diario"] = "rotativo";
+            $noticias["hora"] = date("G:i:s");
+            $noticias["tipo"] = "primarias"; 
+
+            $noticias["url"] = $enlace;
+            $noticias["img"] = $image;
+            $noticias["region"] = "oaxaca";   
+
+                
+            return $noticias;
+        });
+        $this->insertData($data);
+
+    }
+
 
     public function rotativoSports(Client $client) {
         $crawler = $client->request("GET", "https://www.rotativooaxaca.com.mx/category/deportes/");
@@ -218,30 +246,34 @@ class ScrappingController extends Controller
 
 
 
-    public function rotativoHealth(Client $client) {
-        $crawler = $client->request("GET", "https://agenciaoaxacamx.com/salud/");
-        $data = $crawler->filter(".article_content")->each(function ($node) {
+    public function milenioHealth(Client $client) {
+        $crawler = $client->request("GET", "https://www.milenio.com/temas/secretaria-de-salud-oaxaca");
+        $data = $crawler->filter(".lr-row-news")->each(function ($node) {
             $health = array();
-            $title = $node->filter(".entry-title > a")->text();
-            $resumen = $node->filter(".entry-content")->text();
-            $enlace = $node->filter(".entry-title > a")->attr("href");
-            $image = $node->filter('background-image')->getvalue();
-            var_dump($image);
+            $url = "https://www.milenio.com/temas/secretaria-de-salud-oaxaca";
+            $title = $node->filter(".title > a > h2")->text();
+            $resumen = $node->filter(".summary > span")->text();
+            $enlace = $node->filter(".title > a")->attr("href");
+            $image = $url . "".$node->filter('img')->attr("src");
+            // var_dump($title);
 
-            // $health["titulo"] = $title;
-            // $health["resumen"] = $resumen;
-            // $health["categoria"] = "Deportes";
-            // $health["fecha"] = date("Y:m:d");
-            // $health["diario"] = "rotativo";
-            // $health["hora"] = date("G:i:s");
-            // $health["url"] = $enlace;
-            // //   $health["img"] = $image;
-            // // return $health;
+            $health["titulo"] = $title;
+            $health["resumen"] = $resumen;
+            $health["categoria"] = "Salud";
+            $health["fecha"] = date("Y:m:d");
+            $health["diario"] = "milenio";
+            $health["hora"] = date("G:i:s");
+            $health["url"] = $enlace;
+            $health["img"] = $image;
+            $health["region"] = "oaxaca";   
+            $health["tipo"] = "primarias"; 
+
+
+            return $health;
             // var_dump($health);
-            // var_dump("<br>");
+            //  var_dump("<br>");
         });
-
-        // $this->insertData($data);
+        $this->insertData($data);
     }
 
     public function tiempo(Client $client) {

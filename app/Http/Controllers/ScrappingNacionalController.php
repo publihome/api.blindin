@@ -61,7 +61,8 @@ class ScrappingNacionalController extends Controller
             $url = "https://www.jornada.com.mx";
             $title = $node->filter("h2 > a")->text();
             $enlace = $url . "" .$node->filter("h2 > a")->attr("href");
-            $image = $node->filter("img")->attr("src");
+            $image_name = $node->filter("img")->attr("src");
+            $image = strpos($image_name, '/theme') === false ? $image_name : $url ."". $image_name;
             $resumen = $node->filter(".card-text > p")->text("sin resumen");
             $sports["diario"] = "la jornada";
             $sports["titulo"] = $title;
@@ -74,7 +75,6 @@ class ScrappingNacionalController extends Controller
             $sports["tipo"] = "primarias";
 
             $sports["region"] = "nacional";
-            // var_dump($sports);
             return $sports;
         });
         $this->insertData($data);
@@ -209,26 +209,24 @@ class ScrappingNacionalController extends Controller
 
 
     // las imagenes estan codificadas
-    public function unotvDeportes(Client $client){
-        $crawler = $client->request('GET', 'https://www.unotv.com/deportes/');
-        $data = $crawler->filter(".category-deportes")->each(function($node){
+    public function elSolDeMexicoDeportes(Client $client){
+        $crawler = $client->request('GET', 'https://www.elsoldemexico.com.mx/deportes/');
+        $data = $crawler->filter(".teaser")->each(function($node){
             $sport = array();
-            $title = $node->filter(".entry-title > a")->text();
-            $enlace = $node->filter(".entry-title > a")->attr("href");
+            $title = $node->filter(".title > a")->text();
+            $enlace = $node->filter(".title > a")->attr("href");
             $image = $node->filter("img")->attr("src");
-            $sport["diario"] = "unotv";
+            $resumen = $node->filter('.summary')->text();
+            $sport["diario"] = "el sol de mexico";
             $sport["titulo"] = $title;
             $sport["fecha"] = date("Y:m:d");
             $sport["hora"] = date("G:i:s");
-            $sport["resumen"] = "";
+            $sport["resumen"] = $resumen ;
             $sport["categoria"] = "Deportes";
             $sport["url"] = $enlace;
             $sport["img"] = $image;
             $sport["region"] = "nacional";
             $sport["tipo"] = "terciarias";
-            // var_dump($sport);
-//  var_dump(base64_decode("PHN2ZyBoZWlnaHQ9JzIyNScgd2lkdGg9JzQwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2ZXJzaW9uPScxLjEnLz4="));
-
 
             return $sport;
         });
@@ -329,7 +327,8 @@ class ScrappingNacionalController extends Controller
             $title = $node->filter(".title-default > a ")->text();
             $enlace = $url . "" .$node->filter(".title-default > a")->attr("href");
             $resumen = $node->filter(".card-text > p")->text("");
-            $image = $node->filter("img")->attr("src");
+            $image_name = $node->filter("img")->attr("src");
+            $image = strpos($image_name, '/theme') === false ? $image_name : $url ."". $image_name;
             $economy["diario"] = "la jornada";
             $economy["titulo"] = $title;
             $economy["fecha"] = date("Y:m:d");
@@ -340,11 +339,10 @@ class ScrappingNacionalController extends Controller
             $economy["img"] = $image;
             $economy["region"] = "nacional";
             $economy["tipo"] = "secundarias";
-             var_dump($economy);
             return $economy;
         });
 
-         $this->insertData($data);
+        $this->insertData($data);
     }
 
 
