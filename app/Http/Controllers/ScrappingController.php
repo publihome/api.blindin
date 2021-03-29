@@ -27,13 +27,16 @@ class ScrappingController extends Controller
         $this->imparcialEconomy($client);
         $this->imparcialHealth($client);
         $this->imparcialSports($client);
+
         $tiempo = $this->tiempo($client);
         $this->tiempoEconomy($client);
         $this->tiempoHealth($client);
         $this->tiempoSports($client);
+
         $rotativo = $this->rotativo($client);
-        // $this->rotativoHealth($client);
+        $this->rotativoEconomy($client);
         $this->rotativoSports($client);
+        $this->milenioHealth($client);
     }
 
 
@@ -200,17 +203,15 @@ class ScrappingController extends Controller
             $image = $node->filter("img")->attr("src");
             $noticias["titulo"] = $title;
             $noticias["resumen"] = $resumen;
-            $noticias["categoria"] = "Reciente";
+            $noticias["categoria"] = "Economia";
             $noticias["fecha"] = date("Y:m:d");
             $noticias["diario"] = "rotativo";
             $noticias["hora"] = date("G:i:s");
             $noticias["tipo"] = "primarias"; 
-
             $noticias["url"] = $enlace;
             $noticias["img"] = $image;
             $noticias["region"] = "oaxaca";   
-
-                
+                var_dump($noticias);
             return $noticias;
         });
         $this->insertData($data);
@@ -250,11 +251,11 @@ class ScrappingController extends Controller
         $crawler = $client->request("GET", "https://www.milenio.com/temas/secretaria-de-salud-oaxaca");
         $data = $crawler->filter(".lr-row-news")->each(function ($node) {
             $health = array();
-            $url = "https://www.milenio.com/temas/secretaria-de-salud-oaxaca";
+            $url = "https://www.milenio.com";
             $title = $node->filter(".title > a > h2")->text();
             $resumen = $node->filter(".summary > span")->text();
-            $enlace = $node->filter(".title > a")->attr("href");
-            $image = $url . "".$node->filter('img')->attr("src");
+            $enlace = $url ."". $node->filter(".title > a")->attr("href");
+            $image = $url ."". $node->filter('img')->attr("data-lazy");
             // var_dump($title);
 
             $health["titulo"] = $title;
@@ -268,12 +269,10 @@ class ScrappingController extends Controller
             $health["region"] = "oaxaca";   
             $health["tipo"] = "primarias"; 
 
-
-            return $health;
-            // var_dump($health);
-            //  var_dump("<br>");
+            var_dump($health);
+            // return $health;
         });
-        $this->insertData($data);
+        // $this->insertData($data);
     }
 
     public function tiempo(Client $client) {
@@ -376,9 +375,7 @@ class ScrappingController extends Controller
             $economy["categoria"] = "Economia";
             $economy["region"] = "oaxaca";   
             $economy["tipo"] = "terciarias"; 
-
-           
-            
+            var_dump($economy);         
             return $economy;
         });
 

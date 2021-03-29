@@ -17,11 +17,11 @@ class ScrappingNacionalController extends Controller
     $this->altoNivelRecientes($client);
     $this->altoNivelEconomia($client);
     $this->infoSalus($client);
-    $this->unotvDeportes($client);
     $this->exelsiorRecientes($client);
     $this->exelsiorDeportes($client);
     $this->elSolDeMexicoSalud($client);
     $this->elLaJornadaEconomia($client);
+    $this->elSolDeMexicoDeportes($client);
 
     }
 
