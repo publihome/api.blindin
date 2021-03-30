@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScrappingController;
 use App\Http\Controllers\ScrappingNacionalController;
+use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\NoticiasSecundarias;
 use App\Http\Controllers\NoticiasTerciarias;
 use App\Http\Controllers\NoticiasPrincipales;
@@ -41,6 +42,8 @@ Route::get("/terciarias/health/{region}",[NoticiasTerciarias::class, 'health']);
 Route::get("/terciarias/economy/{region}",[NoticiasTerciarias::class, 'economy']);
 
 Route::get("/search/{word}",[ScrappingController::class, 'searchNew']);
+
+Route::get("/anuncios", [PublicidadController::class, 'getAnuncios']);
 
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
 Route::get("/nacionales",[ScrappingNacionalController::class, 'index']);
