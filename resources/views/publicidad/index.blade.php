@@ -1,6 +1,5 @@
     @include('templates.header')
     @include('templates.navbar')
-        <!-- Button modal add-->
         @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -13,9 +12,9 @@
             @foreach ($anuncios as $anuncio)
                 <div class="list-group-item list-group-item-action d-flex flex-row justify-content-start" >
                     <div class="img">
-                        <img src="{{ asset('storage').'/'.$anuncio->image }}" class="img-fluid mr-4 " width="300" />
+                        <img src="{{ asset('storage').'/'.$anuncio->image }}" class="img-fluid mr-4 rounded" width="300" />
                     </div>
-                    <div class="info ml-auto">
+                    <div class="info mx-auto ">
                         <p class=".fs-2">Nombre de la publicidad: <span>{{$anuncio->nombreMarca}}</span></p>
                         <p class=".fs-2">Link: <span>{{$anuncio->url}}</span></p>
                         <p class=".fs-2">Posición: <span>{{$anuncio->position}}</span></p>
@@ -31,8 +30,16 @@
                     </div>
                 </div>
                 @endforeach
+        
+
         </div>
     </div>
+        @if(isset($anuncios))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <h2 class="text-center">Aun no tienes anuncios, agrega uno haciendo click </h2>
+        </div>
+        @endif
 
 
      <!-- Modal Agregar-->
