@@ -1,6 +1,8 @@
 <div class="form-group">
     <label for="nombre">Nombre de la marca</label>
-    <input type="text" class="form-control" value="{{isset($data->nombreMarca) ?  $data->nombreMarca  : ''  }}" name="nombreMarca">
+    <input type="text" class="form-control @error('nombreMarca') is-invalid @enderror" value="{{isset($data->nombreMarca) ?  $data->nombreMarca  : old('nombreMarca')  }}" name="nombreMarca">
+    @error('nombreMarca') <small class="text-danger">Compo obligatorio</small> @enderror
+
 </div>
 
 <div class="form-group">
@@ -11,16 +13,19 @@
     </div>    
      @endif
     <input type="file" class="form-control" value="" name="image">
+    @error('image') <small class="text-danger">la imagen es obligatoria</small> @enderror
 </div>
 
 <div class="form-group">
     <label for="url">URL del sitio</label>
-    <input type="text" class="form-control" value="{{isset($data->url) ?   $data->url : '' }}" name="url">
+    <input type="text" class="form-control @error('url') is-invalid @enderror" value="{{isset($data->url) ? $data->url : old('url') }}" name="url">
+    @error('url') <small class="text-danger">Compo obligatorio</small> @enderror
+
 </div>
 
 <div class="form-group">
-    <label for="position">URL del sitio</label>
-    <select name="position" id="" class="form-control">
+    <label for="position">Posición del anuncio</label>
+    <select name="position" id="" class="form-control @error('url') is-invalid @enderror">
         @if(isset($data->position))  
             <option value="{{$data->position}}" >
             @if($data->position == 'top') 
@@ -40,6 +45,8 @@
         <option value="down">Abajo</option>
         @endif
     </select>
+    @error('position') <small class="text-danger">Compo obligatorio</small> @enderror
+
     
 </div>
 

@@ -29,10 +29,11 @@ Route::get('/nacionales', [ScrappingNacionalController::class, 'altoNivelRecient
 
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'loginValidate']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
 
 
-Route::get('/admin', [PublicidadController::class, 'index']);
+Route::get('/admin', [PublicidadController::class, 'index'])->middleware('auth');
 Route::post('/admin/addPublicidad', [PublicidadController::class, 'store']);
 Route::delete('/admin/deletePublicidad/{id}', [PublicidadController::class, 'destroy']);
 Route::get('/admin/editPublicidad/{id}', [PublicidadController::class, 'edit']);

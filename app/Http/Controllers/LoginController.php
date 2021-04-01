@@ -18,8 +18,12 @@ class LoginController extends Controller
         $data = request()->except('_token');
         if(Auth::attempt($data)){
             request()->session()->regenerate();
-            return "stas logeado";
+            return redirect('admin');
         }
-        return "no estas logeado";
+        return redirect('login');
+    }
+
+    public function logout(){
+        Auth::logoutOtherdevices($currentPassword);
     }
 }

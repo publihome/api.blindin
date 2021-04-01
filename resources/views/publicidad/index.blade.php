@@ -2,13 +2,24 @@
     @include('templates.navbar')
         @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
+
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         {{Session::get('mensaje')}}
     </div>
         @endif
+        <div class="d-flex mb-2">
+            <button class="btn btn-success ml-auto" data-bs-toggle="modal" data-bs-target="#modelAdd">Agregar</button>
+        </div>
 
-    <button class="btn btn-success mb-2 mr-auto" data-bs-toggle="modal" data-bs-target="#modelAdd">Agregar</button>
-        <div class="list-group">
+        @if(count($errors)> 0)
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <P class="text-center">No rellenaste todos los campos!</P>
+            </div>
+        @endif
+        
+
+        <div class="list-group col-md-8 mx-auto">
             @foreach ($anuncios as $anuncio)
                 <div class="list-group-item list-group-item-action d-flex flex-row justify-content-start" >
                     <div class="img">
@@ -17,7 +28,7 @@
                     <div class="info mx-auto ">
                         <p class=".fs-2">Nombre de la publicidad: <span>{{$anuncio->nombreMarca}}</span></p>
                         <p class=".fs-2">Link: <span>{{$anuncio->url}}</span></p>
-                        <p class=".fs-2">Posición: <span>{{$anuncio->position}}</span></p>
+                        <p class=".fs-2">Posición: <span>{{$anuncio->position == "top" ? "Arriba" : "Abajo"}}</span></p>
                         <p class=".fs-2">Clicks: <span>{{$anuncio->clicks}}</span> </p>
                         <div class="d-flex ">
                         <a href="{{ url('admin/editPublicidad/'. $anuncio->id) }}" class="btn btn-warning mr-2">Editar</a>  
@@ -30,14 +41,12 @@
                     </div>
                 </div>
                 @endforeach
-        
-
         </div>
     </div>
-        @if(isset($anuncios))
+        @if($anuncios->isEmpty())
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <h2 class="text-center">Aun no tienes anuncios, agrega uno haciendo click </h2>
+            <h2 class="text-center">Aun no tienes anuncios, agrega uno</h2>
         </div>
         @endif
 

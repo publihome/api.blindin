@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#">Features</a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="#">Salir</a>
+                <a class="nav-link" href="{{url('/logout')}}">Salir</a>
             </li>
         </ul>
         </div>

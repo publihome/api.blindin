@@ -31,7 +31,7 @@
                         @csrf
                             <div class="from-group">
                                 <label for="email">Correo electrónico</label>
-                                <input type="email" class="form-control" name="correo">
+                                <input type="email" class="form-control" name="email">
                             </div>
 
                             <div class="from-group">

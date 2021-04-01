@@ -20,7 +20,13 @@ class publicidad extends Model
     }
 
     public function get(){
-        return DB::table('anuncios')->get();
+            return DB::table('anuncios')->get();
+    }
+
+    public function getAdds($ubicacion){
+        return DB::table('anuncios')
+                ->where('position','=', $ubicacion)
+                ->get();
     }
 
     public function getById($id){
