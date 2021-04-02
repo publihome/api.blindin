@@ -42,7 +42,7 @@ Route::get("/terciarias/health/{region}",[NoticiasTerciarias::class, 'health']);
 Route::get("/terciarias/economy/{region}",[NoticiasTerciarias::class, 'economy']);
 
 Route::get("/search/{word}",[ScrappingController::class, 'searchNew']);
-Route::get("/addsTop", [PublicidadController::class, 'getAddsTop']);
+Route::get("/adds/{ubicacion}",[PublicidadController::class, 'getAdds']);
 
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
 Route::get("/nacionales",[ScrappingNacionalController::class, 'index']);

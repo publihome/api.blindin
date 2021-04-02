@@ -33,7 +33,7 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 
 
-Route::get('/admin', [PublicidadController::class, 'index'])->middleware('auth');
+Route::get('/admin', [PublicidadController::class, 'index']);
 Route::post('/admin/addPublicidad', [PublicidadController::class, 'store']);
 Route::delete('/admin/deletePublicidad/{id}', [PublicidadController::class, 'destroy']);
 Route::get('/admin/editPublicidad/{id}', [PublicidadController::class, 'edit']);

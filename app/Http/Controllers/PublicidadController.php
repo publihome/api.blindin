@@ -46,13 +46,14 @@ class PublicidadController extends Controller
         //
         $fields = [
             'nombreMarca' => 'required|string',
-            'image' => 'required|mimes:jpeg,png,jpg',
+            'image' => 'required|mimes:jpeg,png,jpg,gif',
             'url' => 'required',
             'position' => 'required',
         ];
         $message = [
             'required' => 'El :attribute es requerido',
-            'image.required' => 'La foto es requerida'
+            'image.required' => 'La foto es requerida',
+            'image.mimes' => 'Este campo dice IMAGEN imbecil'
         ];
 
         $this->validate($request, $fields, $message);
@@ -159,12 +160,12 @@ class PublicidadController extends Controller
         return redirect('admin')->with('mensaje','Anuncio eliminado');
     }
 
-    public function getAddsTop(){
+    public function getAdds($ubicacion){
         $url="http://localhost:8000/storage";
         $publicidad = new Publicidad;
-        $data =  $publicidad->getAdds("top");
+        $data =  $publicidad->getAdds($ubicacion);
          foreach($data as $anuncio){
-            $anuncio->image = $url.'/'.$anuncio->image    ;
+            $anuncio->image = $url.'/'.$anuncio->image;
          }
         // var_dump($data);
         // $data->image = $url .'/'. $data->image;

@@ -24,6 +24,7 @@ class publicidad extends Model
     }
 
     public function getAdds($ubicacion){
+        
         return DB::table('anuncios')
                 ->where('position','=', $ubicacion)
                 ->get();
