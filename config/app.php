@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://api.blindi.localhost/'),
+    'url' => env('APP_URL', 'http://api.blindin.mx/'),
 
     'asset_url' => env('ASSET_URL', null),
 
