@@ -64,6 +64,11 @@ class PublicidadController extends Controller
         if($request->hasFile('image')){
             $data['image'] = $request->file('image')->store('uploads','public');
         }
+
+
+
+
+
         $data['clicks'] = 0;
         $publicidad = new publicidad;
         $publicidad->add($data);

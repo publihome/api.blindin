@@ -18,11 +18,13 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', [ScrappingController::class, 'index']);
-Route::get('/noticias2', [ScrappingController::class, 'imparcial']);
-Route::get('/noticias3', [ScrappingController::class, 'rotativo']);
-Route::get('/noticias4', [ScrappingController::class, 'tiempo']);
-Route::get('/nacionales', [ScrappingNacionalController::class, 'altoNivelRecientes']);
+Route::get('/', [PublicidadController::class, 'index']);
+
+// Route::get('/', [ScrappingController::class, 'index']);
+// Route::get('/noticias2', [ScrappingControlphp arler::class, 'imparcial']);
+// Route::get('/noticias3', [ScrappingController::class, 'rotativo']);
+// Route::get('/noticias4', [ScrappingController::class, 'tiempo']);
+// Route::get('/nacionales', [ScrappingNacionalController::class, 'altoNivelRecientes']);
 
 /********** P U B L I C I D A D *************** */
 

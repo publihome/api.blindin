@@ -26,6 +26,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     
 });
 
+Route::get('/storage', function(){
+
+     // if(file_exists(public_path('storage'))){
+     //      return 'the " public/storage" directory already exist';
+     // }
+
+     // app('files')->link(
+     //      storage_path('app/public'), public_path('storage') 
+     // );
+
+     // return 'The [public/storage] directory has been linked';
+
+     Artisan::call('storage:link');
+     
+   });
+
 Route::get('/primarias/{region}',[NoticiasPrincipales::class, 'index']);
 Route::get("/primarias/sports/{region}",[NoticiasPrincipales::class, 'sports']);
 Route::get("/primarias/health/{region}",[NoticiasPrincipales::class, 'health']);
