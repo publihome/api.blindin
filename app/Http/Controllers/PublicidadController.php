@@ -166,7 +166,7 @@ class PublicidadController extends Controller
     }
 
     public function getAdds($ubicacion){
-        $url="http://localhost:8000/storage";
+        $url="https://api.blindin.mx/storage";
         $publicidad = new Publicidad;
         $data =  $publicidad->getAdds($ubicacion);
          foreach($data as $anuncio){
@@ -175,5 +175,11 @@ class PublicidadController extends Controller
         // var_dump($data);
         // $data->image = $url .'/'. $data->image;
         return $data;
+    }
+
+    public function setClick($id){
+        $add = new publicidad;
+        $add->setClick($id);
+
     }
 }

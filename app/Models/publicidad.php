@@ -35,14 +35,20 @@ class publicidad extends Model
     }
 
     public function deleteData($id){
-        return Db::table('anuncios')->where("id", $id)->delete();
+        return DB::table('anuncios')->where("id", $id)->delete();
     }
 
 
     public function updateData($data, $id){
-        return Db::table('anuncios')
+        return DB::table('anuncios')
                     ->where("id", $id)
                     ->update($data);
+    }
+
+    public function setClick($id){
+        DB::table('anuncios')
+            ->where('id',$id)
+            ->increment('clicks', 1);
     }
 
 }

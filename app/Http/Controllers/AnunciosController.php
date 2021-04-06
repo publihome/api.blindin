@@ -12,7 +12,6 @@ class AnunciosController extends Controller
 
     }
     public function getAddsTop(){
-        $url="http://localhost:8000/storage";
         $publicidad = new Publicidad;
         return $publicidad;
         exit;
