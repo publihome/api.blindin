@@ -28,15 +28,15 @@ class ScrappingController extends Controller
         $this->imparcialHealth($client);
         $this->imparcialSports($client);
 
-        $tiempo = $this->tiempo($client);
-        $this->tiempoEconomy($client);
-        $this->tiempoHealth($client);
-        $this->tiempoSports($client);
-
-        $rotativo = $this->rotativo($client);
+        $this->rotativo($client);
         $this->rotativoEconomy($client);
         $this->rotativoSports($client);
         $this->milenioHealth($client);
+
+        $this->quadratin($client);
+        $this->quadratinSports($client);
+        $this->oaxacaEconomy($client);
+        $this->oaxacaHealth($client);
     }
 
 
@@ -118,7 +118,7 @@ class ScrappingController extends Controller
             $health["img"] = $image;  
             $health["region"] = "oaxaca"; 
             $health["tipo"] = "secundarias"; 
-            var_dump($health);
+            // var_dump($health);
             return $health;            
         });
 
@@ -211,7 +211,7 @@ class ScrappingController extends Controller
             $noticias["url"] = $enlace;
             $noticias["img"] = $image;
             $noticias["region"] = "oaxaca";   
-                var_dump($noticias);
+                // var_dump($noticias);
             return $noticias;
         });
         $this->insertData($data);
@@ -220,12 +220,12 @@ class ScrappingController extends Controller
 
 
     public function rotativoSports(Client $client) {
-        $crawler = $client->request("GET", "https://www.rotativooaxaca.com.mx/category/deportes/");
-        $data = $crawler->filter(".category-deportes")->each(function ($node) {
+        $crawler = $client->request("GET", "https://tmbinfo.com/category/deportes/");
+        $data = $crawler->filter(".item-list")->each(function ($node) {
             $sports = array();
             $title = $node->filter(".post-title")->text();
-            $resumen = $node->filter(".entry")->text();
-            $enlace = $node->filter(".post-title > a")->attr("href");
+            $resumen = $node->filter(".entry > p")->text();
+            $enlace = $node->filter(".post-thumbnail > a")->attr("href");
             $image = $node->filter("img")->attr("src");
 
             $sports["tipo"] = "primarias"; 
@@ -233,12 +233,11 @@ class ScrappingController extends Controller
             $sports["resumen"] = $resumen;
             $sports["categoria"] = "Deportes";
             $sports["fecha"] = date("Y:m:d");
-            $sports["diario"] = "rotativo";
+            $sports["diario"] = "tmbinfo";
             $sports["hora"] = date("G:i:s");
             $sports["url"] = $enlace;
             $sports["img"] = $image;
             $sports["region"] = "oaxaca";   
-
             return $sports;
         });
 
@@ -269,25 +268,26 @@ class ScrappingController extends Controller
             $health["region"] = "oaxaca";   
             $health["tipo"] = "primarias"; 
 
-            var_dump($health);
-            // return $health;
+            // var_dump($health);
+            return $health;
         });
-        // $this->insertData($data);
+        $this->insertData($data);
     }
 
-    public function tiempo(Client $client) {
-        $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/oaxaca/');
-        $data =  $crawler->filter('.td_module_1')->each(function($node) {
+    public function quadratin(Client $client) {
+        $crawler = $client->request('GET', 'https://oaxaca.quadratin.com.mx/');
+        $data =  $crawler->filter('.col-md-6')->each(function($node) {
             $noticias = array();
 
-            $title = $node->filter(".entry-title")->text();
-            $enlace = $node->filter(".entry-title > a")->attr("href");
+            $title = $node->filter(".box-content > a > h4")->text();
+            $enlace = $node->filter(".box-content > a")->attr("href");
             $image = $node->filter("img")->attr("src");
+            $resumen = $node->filter(".box-content > a > p")->text();
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
-            $noticias["diario"] = "tiempo";
-            $noticias["resumen"] = "";
+            $noticias["diario"] = "quadratin";
+            $noticias["resumen"] = $resumen;
             $noticias["url"] = $enlace;
             $noticias["img"] = $image;
             $noticias["categoria"] = "Reciente";
@@ -295,92 +295,209 @@ class ScrappingController extends Controller
             $noticias["tipo"] = "terciarias"; 
 
 
+            var_dump($noticias);
             
-            return $noticias;
+             return $noticias;
+        });
+
+        $this->insertData($data);
+    }
+
+    // public function tiempo(Client $client) {
+    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/oaxaca/');
+    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
+    //         $noticias = array();
+
+    //         $title = $node->filter(".entry-title")->text();
+    //         $enlace = $node->filter(".entry-title > a")->attr("href");
+    //         $image = $node->filter("img")->attr("src");
+    //         $noticias["hora"] = date("G:i:s");
+    //         $noticias["fecha"] = date("Y:m:d");
+    //         $noticias["titulo"] = $title;
+    //         $noticias["diario"] = "tiempo";
+    //         $noticias["resumen"] = "";
+    //         $noticias["url"] = $enlace;
+    //         $noticias["img"] = $image;
+    //         $noticias["categoria"] = "Reciente";
+    //         $noticias["region"] = "oaxaca"; 
+    //         $noticias["tipo"] = "terciarias"; 
+
+
+    //         var_dump($noticias);
+            
+    //          return $noticias;
+    //     });
+
+    //      $this->insertData($data);
+    // }
+
+    public function quadratinSports(Client $client) {
+        $crawler = $client->request('GET', 'https://oaxaca.quadratin.com.mx/deportes/');
+        $data =  $crawler->filter('.col-lg-6')->each(function($node) {
+            $noticias = array();
+
+            $title = $node->filter(".box-content > a > h4")->text();
+            $enlace = $node->filter(".box-content > a")->attr("href");
+            $image = $node->filter("img")->attr("src");
+            $resumen = $node->filter(".box-content > a > p")->text();
+            $noticias["hora"] = date("G:i:s");
+            $noticias["fecha"] = date("Y:m:d");
+            $noticias["titulo"] = $title;
+            $noticias["diario"] = "quadratin";
+            $noticias["resumen"] = $resumen;
+            $noticias["url"] = $enlace;
+            $noticias["img"] = $image;
+            $noticias["categoria"] = "Deportes";
+            $noticias["region"] = "oaxaca"; 
+            $noticias["tipo"] = "terciarias"; 
+
+
             // var_dump($noticias);
-        });
-
-        $this->insertData($data);
-    }
-
-    public function tiempoSports(Client $client) {
-        $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/deportes/');
-        $data =  $crawler->filter('.td_module_1')->each(function($node) {
-            $sports = array();
-
-            $title = $node->filter(".entry-title")->text();
-            $enlace = $node->filter(".entry-title > a")->attr("href");
-            $image = $node->filter("img")->attr("src");
-            $sports["hora"] = date("G:i:s");
-            $sports["fecha"] = date("Y:m:d");
-            $sports["titulo"] = $title;
-            $sports["diario"] = "tiempo";
-            $sports["resumen"] = "";
-            $sports["url"] = $enlace;
-            $sports["img"] = $image;
-            $sports["categoria"] = "Deportes";
-            $sports["region"] = "oaxaca";   
-            $sports["tipo"] = "terciarias"; 
-
-
             
-            return $sports;
+             return $noticias;
         });
 
         $this->insertData($data);
     }
 
-    public function tiempoHealth(Client $client) {
-        $crawler = $client->request('GET', 'https://tiempodigital.mx/category/salud/');
-        $data =  $crawler->filter('.td_module_1')->each(function($node) {
-            $health = array();
 
-            $title = $node->filter(".entry-title")->text();
-            $enlace = $node->filter(".entry-title > a")->attr("href");
-            $image = $node->filter("img")->attr("src");
-            $health["hora"] = date("G:i:s");
-            $health["fecha"] = date("Y:m:d");
-            $health["titulo"] = $title;
-            $health["diario"] = "tiempo";
-            $health["resumen"] = "";
-            $health["url"] = $enlace;
-            $health["img"] = $image;
-            $health["categoria"] = "Salud";
-            $health["region"] = "oaxaca";
-            $health["tipo"] = "terciarias"; 
+    // public function tiempoSports(Client $client) {
+    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/deportes/');
+    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
+    //         $sports = array();
+
+    //         $title = $node->filter(".entry-title")->text();
+    //         $enlace = $node->filter(".entry-title > a")->attr("href");
+    //         $image = $node->filter("img")->attr("src");
+    //         $sports["hora"] = date("G:i:s");
+    //         $sports["fecha"] = date("Y:m:d");
+    //         $sports["titulo"] = $title;
+    //         $sports["diario"] = "tiempo";
+    //         $sports["resumen"] = "";
+    //         $sports["url"] = $enlace;
+    //         $sports["img"] = $image;
+    //         $sports["categoria"] = "Deportes";
+    //         $sports["region"] = "oaxaca";   
+    //         $sports["tipo"] = "terciarias"; 
             
-            return $health;
-            
-        });
+    //         return $sports;
+    //     });
 
-        $this->insertData($data);
-    }
+    //     $this->insertData($data);
+    // }
 
+    public function oaxacaEconomy(Client $client) {
+        $crawler = $client->request('GET', 'https://e-oaxaca.com/tags/economia-0');
+        $data =  $crawler->filter('.node')->each(function($node) {
+            $noticias = array();
+            $url="https://e-oaxaca.com";
 
-    public function tiempoEconomy(Client $client) {
-        $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/finanzas/');
-        $data =  $crawler->filter('.td_module_1')->each(function($node) {
-            $economy = array();
-
-            $title = $node->filter(".entry-title")->text();
-            $enlace = $node->filter(".entry-title > a")->attr("href");
+            $title = $node->filter(".field-item > h2 > a")->text();
+            $enlace = $url .''.$node->filter(".field-item > h2  > a")->attr("href");
+            $resumen = $node->filter(".field-name-field-note-summary >div  > div")->text();
             $image = $node->filter("img")->attr("src");
-            $economy["hora"] = date("G:i:s");
-            $economy["fecha"] = date("Y:m:d");
-            $economy["titulo"] = $title;
-            $economy["diario"] = "tiempo";
-            $economy["resumen"] = "";
-            $economy["url"] = $enlace;
-            $economy["img"] = $image;
-            $economy["categoria"] = "Economia";
-            $economy["region"] = "oaxaca";   
-            $economy["tipo"] = "terciarias"; 
-            var_dump($economy);         
-            return $economy;
+            $noticias["hora"] = date("G:i:s");
+            $noticias["fecha"] = date("Y:m:d");
+            $noticias["titulo"] = $title;
+            $noticias["diario"] = "e-oaxaca";
+             $noticias["resumen"] = $resumen;
+             $noticias["url"] = $enlace;
+            $noticias["img"] = $image;
+            $noticias["categoria"] = "Economia";
+             $noticias["region"] = "oaxaca"; 
+             $noticias["tipo"] = "terciarias"; 
+
+            // var_dump($noticias);
+            
+             return $noticias;
         });
 
         $this->insertData($data);
     }
+
+
+
+    public function oaxacaHealth(Client $client) {
+        $crawler = $client->request('GET', 'https://e-oaxaca.com/secciones/salud');
+        $data =  $crawler->filter('.node')->each(function($node) {
+            $noticias = array();
+            $url="https://e-oaxaca.com";
+
+            $title = $node->filter(".field-item > h2 > a")->text();
+            $enlace = $url .''.$node->filter(".field-item > h2  > a")->attr("href");
+            $resumen = $node->filter(".field-name-field-note-summary >div  > div")->text();
+            $image = $node->filter("img")->attr("src");
+            $noticias["hora"] = date("G:i:s");
+            $noticias["fecha"] = date("Y:m:d");
+            $noticias["titulo"] = $title;
+            $noticias["diario"] = "e-oaxaca";
+             $noticias["resumen"] = $resumen;
+             $noticias["url"] = $enlace;
+            $noticias["img"] = $image;
+            $noticias["categoria"] = "Salud";
+             $noticias["region"] = "oaxaca"; 
+             $noticias["tipo"] = "terciarias"; 
+
+            //  var_dump($noticias);
+            
+             return $noticias;
+        });
+
+        $this->insertData($data);
+    }
+
+
+    // public function tiempoHealth(Client $client) {
+    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/salud/');
+    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
+    //         $health = array();
+
+    //         $title = $node->filter(".entry-title")->text();
+    //         $enlace = $node->filter(".entry-title > a")->attr("href");
+    //         $image = $node->filter("img")->attr("src");
+    //         $health["hora"] = date("G:i:s");
+    //         $health["fecha"] = date("Y:m:d");
+    //         $health["titulo"] = $title;
+    //         $health["diario"] = "tiempo";
+    //         $health["resumen"] = "";
+    //         $health["url"] = $enlace;
+    //         $health["img"] = $image;
+    //         $health["categoria"] = "Salud";
+    //         $health["region"] = "oaxaca";
+    //         $health["tipo"] = "terciarias"; 
+            
+    //         return $health;
+            
+    //     });
+
+    //     $this->insertData($data);
+    // }
+
+
+    // public function tiempoEconomy(Client $client) {
+    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/finanzas/');
+    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
+    //         $economy = array();
+
+    //         $title = $node->filter(".entry-title")->text();
+    //         $enlace = $node->filter(".entry-title > a")->attr("href");
+    //         $image = $node->filter("img")->attr("src");
+    //         $economy["hora"] = date("G:i:s");
+    //         $economy["fecha"] = date("Y:m:d");
+    //         $economy["titulo"] = $title;
+    //         $economy["diario"] = "tiempo";
+    //         $economy["resumen"] = "";
+    //         $economy["url"] = $enlace;
+    //         $economy["img"] = $image;
+    //         $economy["categoria"] = "Economia";
+    //         $economy["region"] = "oaxaca";   
+    //         $economy["tipo"] = "terciarias"; 
+    //         // var_dump($economy);         
+    //         return $economy;
+    //     });
+
+    //     $this->insertData($data);
+    // }
 
 
 

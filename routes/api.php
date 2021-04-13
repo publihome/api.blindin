@@ -63,4 +63,4 @@ Route::post("/adds/clicked/{id}",[PublicidadController::class, 'setClick']);
 
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
 Route::get("/nacionales",[ScrappingNacionalController::class, 'index']);
-Route::get("/s",[ScrappingController::class, 'rotativoEconomy']);
+Route::get("/s",[ScrappingController::class, 'oaxacaHealth']);
