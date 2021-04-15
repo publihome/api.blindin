@@ -71,6 +71,17 @@ class NoticiasModel extends Model
         return json_encode($noticias);
     }
 
+    public function getNewsCovid($region,$tipo){
+        $noticias = DB::table("noticias")
+            ->where("region","=",$region)
+            ->where("categoria","=","Covid")
+            ->where("tipo","=",$tipo)
+            ->orderBy("fecha","desc")
+            ->orderBy("hora","desc")
+            ->paginate(12);
+        return json_encode($noticias);
+    }
+
     public function searchNew($word){
         $new = DB::table("noticias")
                     ->where("titulo", "like", '%'.$word."%")

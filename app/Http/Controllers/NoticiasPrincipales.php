@@ -37,5 +37,10 @@ class NoticiasPrincipales extends Controller
         return $db->getNewsEconomy($region,$this->tipo);
     }
 
+    public function getCovidNews($region){
+        $db = new NoticiasModel;
+        return $db->getNewsCovid($region, $this->tipo);
+    }
+
     
 }
