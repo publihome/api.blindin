@@ -94,4 +94,60 @@ class NoticiasModel extends Model
                     ->paginate(6);
         return json_encode($new);
     }
+
+    //consultas para mobile
+
+
+    public function getNewsRecentToMobile($region){
+        $noticias = DB::table("noticias")
+            ->where("region","=",$region)
+            ->where("categoria","=","Reciente")
+            ->orderBy("fecha","desc")
+            ->orderBy("hora","desc")
+            ->paginate(12);
+        return json_encode($noticias);
+    }
+
+    public function getNewsHealthToMobile($region){
+        $noticias = DB::table("noticias")
+            ->where("region","=",$region)
+            ->where("categoria","=","Salud")
+            ->orderBy("fecha","desc")
+            ->orderBy("hora","desc")
+            ->paginate(12);
+        return json_encode($noticias);
+    }
+
+    public function getNewsEconomyToMobile($region){
+        $noticias = DB::table("noticias")
+            ->where("region","=",$region)
+            ->where("categoria","=","Economia")
+            ->orderBy("fecha","desc")
+            ->orderBy("hora","desc")
+            ->paginate(12);
+        return json_encode($noticias);
+    }
+
+    public function getNewsSportsToMobile($region){
+        $noticias = DB::table("noticias")
+            ->where("region","=",$region)
+            ->where("categoria","=","Deportes")
+            ->orderBy("fecha","desc")
+            ->orderBy("hora","desc")
+            ->paginate(12);
+        return json_encode($noticias);
+    }
+
+    public function getNewsCovidoMobile($region){
+        $noticias = DB::table("noticias")
+            ->where("region","=",$region)
+            ->where("categoria","=","Covid")
+            ->orderBy("fecha","desc")
+            ->orderBy("hora","desc")
+            ->paginate(12);
+        return json_encode($noticias);
+    }
+
+
+    
 }

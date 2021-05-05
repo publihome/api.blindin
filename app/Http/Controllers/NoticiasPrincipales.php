@@ -42,5 +42,40 @@ class NoticiasPrincipales extends Controller
         return $db->getNewsCovid($region, $this->tipo);
     }
 
+
+    //controllres to mobile
+
+    public function RecentMobile($region){
+        $db = new NoticiasModel;
+        return $db->getNewsRecentToMobile($region);
+
+    }
+
+    public function HealthMobile($region){
+        $db = new NoticiasModel;
+        return $db->getNewsHealthToMobile($region);
+        
+    }
+
+    public function EconomyMobile($region){
+        $db = new NoticiasModel;
+        return $db->getNewsEconomyToMobile($region);
+        
+    }
+
+    public function SportsMobile($region){
+        $db = new NoticiasModel;
+        return $db->getNewsSportsToMobile($region);
+        
+    }
+
+    public function covidMobile($region){
+        $db = new NoticiasModel;
+        return $db->getNewsCovidToMobile($region);
+        
+    }
+
+    
+
     
 }
