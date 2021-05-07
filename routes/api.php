@@ -65,7 +65,7 @@ Route::get("/covid/{region}",[NoticiasPrincipales::class, 'getCovidNews']);
 
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
 Route::get("/nacionales",[ScrappingNacionalController::class, 'index']);
-Route::get("/s",[ScrappingController::class, 'oaxacaHealth']);
+Route::get("/s",[ScrappingController::class, 'covidOax']);
 
 
 //urls to mobile

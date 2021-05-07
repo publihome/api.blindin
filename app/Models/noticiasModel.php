@@ -12,20 +12,24 @@ class NoticiasModel extends Model
 
 
     public function insertData($newsData){
+       var_dump($newsData);
         if(isset($newsData)){
             if(DB::table("noticias")->get() == ""){
             DB::table('noticias')->insert($newsData);
             }
             foreach ($newsData as $not) {
                 # code...
-                if (DB::table('noticias')->where('titulo',$not["titulo"] )->doesntExist()) {
-                    $data = DB::table('noticias')->insert($not);
+                if($not != ""){
+                    if (DB::table('noticias')->where('titulo',$not["titulo"] )->doesntExist()) {
+                        $data = DB::table('noticias')->insert($not);
+                    }
                 }
             }
         }
     } 
 
     public function getNewsRecientes($region,$tipo){
+       
         $noticias = DB::table("noticias")
             ->where("region","=",$region)
             ->where("categoria","=","Reciente")
