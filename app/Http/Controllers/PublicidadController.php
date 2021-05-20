@@ -165,15 +165,13 @@ class PublicidadController extends Controller
         return redirect('admin')->with('mensaje','Anuncio eliminado');
     }
 
-    public function getAdds($ubicacion){
-        $url="https://api.blindin.mx/storage";
+    public function getAdds(UrlGenerator $url, $ubicacion){
+        $urlbase = $url;
         $publicidad = new Publicidad;
         $data =  $publicidad->getAdds($ubicacion);
          foreach($data as $anuncio){
-            $anuncio->image = $url.'/'.$anuncio->image;
+            $anuncio->image = $urlbase->to('/storage').'/'.$anuncio->image;
          }
-        // var_dump($data);
-        // $data->image = $url .'/'. $data->image;
         return $data;
     }
 

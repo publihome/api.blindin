@@ -23,11 +23,6 @@ class ScrappingController extends Controller
 
     public function index(Client $client) {
 
-        $imparcial = $this->imparcial($client);
-        $this->imparcialEconomy($client);
-        $this->imparcialHealth($client);
-        $this->imparcialSports($client);
-
         $this->rotativo($client);
         $this->rotativoEconomy($client);
         $this->rotativoSports($client);
@@ -41,10 +36,17 @@ class ScrappingController extends Controller
         $this->covidOax($client);
     }
 
-  
+    public function oaxaca2(Client $client){
+        
+        $this->imparcial($client);
+        $this->imparcialEconomy($client);
+        $this->imparcialHealth($client);
+        $this->imparcialSports($client);
+
+    }
 
     public function imparcial(Client $client) {
-        $crawler = $client->request('GET', 'https://imparcialoaxaca.mx/ultima-hora/');
+        $crawler = $client->request('GET', 'https://imparcialoaxaca.mx/ultima-hora');
         $data = $crawler->filter(".article-post")->each(function($node) {
             $noticias = array();         
             $resumen_array = explode("Leer más", $node->filter(".post-content")->text());
@@ -92,7 +94,7 @@ class ScrappingController extends Controller
             });
 
             $sports["titulo"] = $dataContent->filter('.title-post > h1')->text();
-            $sports["img"] = $dataContent->filter('.size-full')->attr("src");
+            $sports["img"] = $dataContent->filter('figure > img')->attr("src");
             $sports["texto"] = json_encode($contentNew);
             $sports["diario"] = "imparcial";
             $sports["fecha"] = date("Y:m:d");
@@ -211,8 +213,6 @@ class ScrappingController extends Controller
             $noticias["tipo"] = "primarias";
             $noticias["url"] = $enlace;
             $noticias["region"] = "oaxaca";
-
-            var_dump($noticias);
             return $noticias;
         });
         $this->insertData($data);
@@ -306,12 +306,13 @@ class ScrappingController extends Controller
             // var_dump($title);
             $client = new Client();
             $scrap = $client->request('GET', $enlace);
-            $dataContent = $scrap->filter('.entry');
+            $dataContent = $scrap->filter('.content-body');
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
 
             $health["titulo"] = $title;
+            $health["texto"] = json_encode($contentNew);
             $health["resumen"] = $resumen;
             $health["categoria"] = "Salud";
             $health["fecha"] = date("Y:m:d");
@@ -358,7 +359,7 @@ class ScrappingController extends Controller
             $noticias["categoria"] = "Reciente";
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "terciarias";
-            var_dump($noticias);
+            // var_dump($noticias);
 
             return $noticias;
         });
@@ -436,9 +437,9 @@ class ScrappingController extends Controller
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "terciarias";
 
-            var_dump($noticias);
+            // var_dump($noticias);
 
-            //  return $noticias;
+            return $noticias;
         });
 
         $this->insertData($data);
@@ -508,12 +509,12 @@ class ScrappingController extends Controller
             $noticias["resumen"] = trim($resumen);
             $noticias["categoria"] = "Covid";
             $noticias["url"] = $enlace;
-            $sports["img"] = $dataContent->filter('.size-full')->attr("src");
+            $noticias["img"] = $dataContent->filter('.size-full')->attr("src");
 
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "primarias";
-            var_dump($noticias);
-            // return $noticias;
+            // var_dump($noticias);
+            return $noticias;
 
         });
         $this->insertData($data);

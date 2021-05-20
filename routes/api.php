@@ -64,6 +64,7 @@ Route::post("/adds/clicked/{id}",[PublicidadController::class, 'setClick']);
 Route::get("/covid/{region}",[NoticiasPrincipales::class, 'getCovidNews']);
 
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
+Route::get("/oaxaca2",[ScrappingController::class, 'oaxaca2']);
 Route::get("/nacionales",[ScrappingNacionalController::class, 'index']);
 Route::get("/s",[ScrappingController::class, 'covidOax']);
 
@@ -74,5 +75,5 @@ Route::get("/s",[ScrappingController::class, 'covidOax']);
 Route::get('/recent/{ubication}',[NoticiasPrincipales::class, 'RecentMobile']);
 Route::get('/health/{ubication}',[NoticiasPrincipales::class, 'HealthMobile']);
 Route::get('/economy/{ubication}',[NoticiasPrincipales::class, 'EconomyMobile']);
-Route::get('/sport/{ubication}',[NoticiasPrincipales::class, 'SportsMobile']);
+Route::get('/sports/{ubication}',[NoticiasPrincipales::class, 'SportsMobile']);
 Route::get('/covid/{ubication}',[NoticiasPrincipales::class, 'CovidMobile']);
