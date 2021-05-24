@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ScrappingController;
-use App\Http\Controllers\ScrappingNacionalController;
+use App\Http\Controllers\WebNewsController;
 use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\LoginController;
 /*
@@ -18,7 +17,7 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', [PublicidadController::class, 'index']);
+// Route::get('/', [PublicidadController::class, 'index']);
 
 // Route::get('/', [ScrappingController::class, 'index']);
 // Route::get('/noticias2', [ScrappingControlphp arler::class, 'imparcial']);
@@ -41,3 +40,12 @@ Route::delete('/admin/deletePublicidad/{id}', [PublicidadController::class, 'des
 Route::get('/admin/editPublicidad/{id}', [PublicidadController::class, 'edit']);
 Route::patch('/admin/updatePublicidad/{id}', [PublicidadController::class, 'update']);
 
+
+//Recientes
+
+
+Route::get('/Recientes/{region}',[WebNewsController::class, 'Recientes']);
+Route::get('/Salud/{region}',[WebNewsController::class, 'Salud']);
+Route::get('/Economia/{region}',[WebNewsController::class, 'Economia']);
+Route::get('/Deportes/{region}',[WebNewsController::class, 'Deportes']);
+Route::get('/Covid/{region}',[WebNewsController::class, 'Covid']);
