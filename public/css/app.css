@@ -1,0 +1,34 @@
+:root{
+    --white: #ffffff;
+    --black: #000000;
+    --gray: #7374796b;
+    --backgound:#f5f1ea;
+    --blue: linear-gradient(262deg, rgba(37,85,238,1) 0%, rgba(29,65,97,1) 0%, rgba(11,105,189,1) 50%, rgba(37,141,233,1) 100%);
+    --recientesColor: #CC8EE1;
+    --deportesColor: #C3E2FF;
+    --economiaColor: #FFA5A5;
+    --saludColor: #EFB810;
+    --covidColor: #296336;
+    --input: #C8D4FF;
+  }
+  
+  body{
+    background: #CCCCCC;
+  }
+  
+  a{ 
+    text-decoration: none;
+    color: #000;
+  }
+  
+  a:hover{
+   text-decoration: none;
+   color: #000;
+  
+  }
+  
+  hr{
+    color: var(--blue);
+    background: var(--blue);
+    height: 10px;
+  }

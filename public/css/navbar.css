@@ -1,0 +1,427 @@
+@import '../app.css';
+
+.navbar-head {
+    display: flex;
+    background: var(--white);
+    height: 81px;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    height: auto;
+    margin: auto;
+}
+
+.title-head {
+    color: var(--white);
+    text-align: center;
+    margin: 0px;
+    font-family: cursive;
+}
+
+.btns-region{
+    display: flex;
+}
+
+.ul-top{
+    display: flex;
+    margin: 0px;
+    margin-left: auto;
+}
+
+.navbar-li-region{
+    display: block;
+    padding: 5px;
+    border: 1px solid var(--gray);
+    background: var(--white);
+}
+
+#Oaxaca{
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 12px;
+    padding: 5px;
+    font-size: 14px;
+
+}
+
+#nacional{
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.btn-active-region{
+    background: var(--gray);
+    border: none;
+}
+
+.navbar {
+    background: var(--white);
+    display: flex;
+    font-size: 18px;
+    padding: 0px;
+    border-bottom: 1px solid #00000031;
+}
+
+.navbar-ul {
+    padding: 0px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.drop-menu{
+    display: contents;
+    
+}
+
+
+.navbar-li{
+    text-decoration: none;
+    display: flex;
+    width: -webkit-fill-available;
+    /* padding: 5px 0px; */
+    text-align: center;
+    justify-content: center;
+}
+
+
+.navbar-li  p{
+    padding: 5px 0px;
+    margin: 0;
+
+}
+
+.navbar-li  i{
+    padding: 5px;
+
+}
+.navbar-li :hover{
+    /* padding: 5px 0px; */
+    margin: 0;
+    color: black;
+
+}
+
+.navbar-li >p:hover{
+    cursor: pointer;
+    color: black ;
+}
+
+#recientes:hover{
+    background: var(--recientesColor);
+}
+
+#salud:hover{
+    background: var(--saludColor);
+}
+
+#economia:hover{
+    background: var(--economiaColor);
+}
+
+#deportes:hover{
+    background: var(--deportesColor);
+}
+
+#covid:hover{
+    background: var(--covidColor);
+}
+
+
+.active-link-recientes {
+    background: var(--recientesColor); 
+    color: var(--white);
+}
+
+.active-link-salud {
+    background:var(--saludColor); 
+    color: var(--white);
+}
+
+.active-link-economia {
+    background:var(--economiaColor); 
+    color: var(--white);
+}
+
+.active-link-deportes {
+    background:var(--deportesColor); 
+    color: var(--white);
+}
+
+.active-link-covid {
+    background:var(--covidColor); 
+    color: var(--white);
+}
+
+
+#btn-menu {
+    display: none;
+}
+
+
+/* navbar2 */
+
+
+.input-search{
+    width: 350px;
+    border-radius: 20px;
+    height: 35px;
+    padding: 15px;
+    border: 1px solid var(--input);
+    background: var(--input);
+    position: relative;
+    margin-right: 10px;
+}
+
+/* .navbar-info ul{
+    border: 1px solid;
+
+} */
+
+.search-container{
+    display: flex;
+    align-items: center;
+}
+
+.input-search:focus{
+    outline: none;
+}
+
+.btn-search{
+    border-radius: 50%;
+    border: none;
+    width: 30px;
+    height: 30px;
+
+}
+
+.btn-search:hover{
+    background: var(--gray);
+    
+}
+
+.covid-ico{
+    width: 25px;
+    height: 25px;
+}
+
+
+
+@media only screen and (max-width: 575.98px){
+    .container {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .navbar-head {
+        position: relative;
+        height: 60px;
+    }
+    
+
+    .drop-menu{
+        display: none;
+        width: 100%;
+        background: var(--white);    
+    }
+
+    .navbar {
+        background: transparent;
+        height: auto;
+        padding: 5px;
+        font-size: 18px;
+        border: none;
+        padding: 0px;
+    }
+
+    
+    .navbar-ul {
+        display: block;
+        flex-direction: column;
+        width: 100%;
+        background: transparent;
+    }
+    
+    .navbar-li{
+        text-decoration: none; 
+        color: var(--white);
+        display: block;
+        margin-left: 0px;
+        padding: 2px 0;
+        border: none
+        
+    }
+
+    .btns-region{
+        float: left;
+        position: absolute;
+        top: 12px;
+        left: 5px;
+    }
+
+    .ul-top{
+        padding: 0;
+    }
+    
+    ul > button{
+        font-size: 12px!important;
+    }
+    
+    #btn-menu {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 6px;
+        width: 35px;
+        height: 35px;
+        margin-right: auto;
+     
+    }
+
+    .menu-ico {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        margin-right: auto;
+    } 
+
+    .d-block{
+        background: var(--blue);
+    }
+
+
+    .btn-search{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        padding: 20px;
+
+    }
+
+
+    .input-search{
+        width: 85%;
+        height: 40px;
+
+    }
+
+
+}
+
+
+@media (min-width: 576px) and (max-width: 767.98px){
+    
+    .container {
+        padding: 0px;
+        margin: 0px;
+        max-width: 100%;
+
+    }
+
+    .navbar-head {
+      position: relative;
+        height: 60px;
+    }
+    
+
+    .navbar {
+        background: transparent;
+        height: auto;
+        padding: 5px;
+        font-size: 18px;
+        border: none;
+        padding: 0px;
+    }
+
+    
+    .navbar-ul {
+        display: block;
+        flex-direction: column;
+        width: 100%;
+        background: transparent;
+    }
+    
+    .navbar-li{
+        text-decoration: none; 
+        color: var(--white);
+        display: block;
+        margin-left: 0px;
+        padding: 2px 0;
+        border: none
+        
+    }
+
+    .drop-menu{
+        display: none;
+        background: var(--white);    
+    }
+    
+    .button-menu {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 6px;
+        width: 35px;
+        height: 35px;
+        margin-right: auto;
+        /* background: var(--blue); */
+     
+    }
+
+    .btns-region{
+        float: left;
+        position: absolute;
+        top: 12px;
+        left: 5px;
+    }
+    
+    /* ul > button{
+        font-size: 12px!important;
+    } */
+
+    .menu-ico {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        margin-right: auto;
+        /* color: white; */
+    } 
+    .search-container{
+        
+    }
+
+    .d-block{
+        background: var(--blue);
+    }
+
+
+    .btn-search{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        padding: 20px;
+
+    }
+
+
+    .input-search{
+        width: 85%;
+        height: 40px;
+
+    }
+
+
+
+}
+
+
+@media (min-width: 768px) and (max-width: 991.98px){
+    
+}

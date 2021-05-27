@@ -108,7 +108,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Reciente")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 
@@ -118,7 +118,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Salud")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 
@@ -128,7 +128,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Economia")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 
@@ -138,7 +138,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Deportes")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 

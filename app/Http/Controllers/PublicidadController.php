@@ -165,14 +165,20 @@ class PublicidadController extends Controller
         return redirect('admin')->with('mensaje','Anuncio eliminado');
     }
 
-    public function getAdds(UrlGenerator $url, $ubicacion){
+    public function getAddsForApi(UrlGenerator $url, $ubicacion){
         $urlbase = $url;
         $publicidad = new Publicidad;
         $data =  $publicidad->getAdds($ubicacion);
          foreach($data as $anuncio){
             $anuncio->image = $urlbase->to('/storage').'/'.$anuncio->image;
          }
-        return $data;
+        return json_encode($data);
+    }
+
+    public function getAdds(UrlGenerator $url, $ubicacion){
+        $publicidad = new Publicidad;
+        $data =  $publicidad->getAdds($ubicacion);
+        return ($data);
     }
 
     public function setClick($id){

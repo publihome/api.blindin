@@ -44,6 +44,10 @@ Route::patch('/admin/updatePublicidad/{id}', [PublicidadController::class, 'upda
 //Recientes
 
 
+Route::get('/', function(){
+    return redirect('/Recientes/oaxaca');
+});
+
 Route::get('/Recientes/{region}',[WebNewsController::class, 'Recientes']);
 Route::get('/Salud/{region}',[WebNewsController::class, 'Salud']);
 Route::get('/Economia/{region}',[WebNewsController::class, 'Economia']);
