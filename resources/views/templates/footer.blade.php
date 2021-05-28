@@ -1,9 +1,7 @@
 @include('public.addBottom')
+</div>
 <script src="{{url('/js/app.js')}}"></script>
-<script>
-    getData()
-</script>
-    </div>
+
 
 </body>
 </html>

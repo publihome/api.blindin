@@ -1,24 +1,21 @@
-const uri = window.location.pathname
+let uri = window.location.pathname
 let end = uri.lastIndexOf("/")
+let region
 let path = uri.slice(1,end).toLowerCase()
-console.log(uri)
-console.log(end)
-console.log(path)
-
+const url_base = "http://localhost:8000/api"
 let link = document.querySelector(`#${path}`)
 link.classList.add(`active-link-${path}`)
+let news
 
-
-$('#btn-menu').click(function(e){
-    $('.drop-menu').toggle('slow')
-  })
-
-  const printjs = (mensaje) => {
-      console.log(mensaje)
-  }
-
+let urls = {
+    recientes: 'recent',
+    salud: 'health',
+    economia: 'economy',
+    deportes: 'sports',
+    covid: 'covid'
+}
   
-  function postData(){
+function postData(){
     const $content = document.querySelector('#content');
     news.map(n => {
         $content.innerHTML += `<div class="col-lg-3 col-md-4 col-sm-6 mb-2 p-1" >
@@ -31,3 +28,19 @@ $('#btn-menu').click(function(e){
         </div>`
     })
 }
+
+function getData(){
+    $.get(`${url_base}/${urls[path]}/oaxaca`, function(response){
+        let data = JSON.parse(response) 
+        console.log(data)
+        news = data.data
+        postData()
+    })
+}
+
+getData()
+
+
+$('#btn-menu').click(function(e){
+    $('.drop-menu').toggle('slow')
+  })
