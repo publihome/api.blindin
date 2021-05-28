@@ -37,8 +37,7 @@
     border: 1px solid var(--gray);
     background: var(--white);
 }
-
-#Oaxaca{
+#oaxaca{
     border-bottom-left-radius: 12px;
     border-top-left-radius: 12px;
     padding: 5px;
@@ -84,7 +83,7 @@
     text-decoration: none;
     display: flex;
     width: -webkit-fill-available;
-    /* padding: 5px 0px; */
+    padding: 5px 0px;
     text-align: center;
     justify-content: center;
 }
@@ -228,6 +227,18 @@
         display: none;
         width: 100%;
         background: var(--white);    
+    }
+
+    .button-menu {
+        display: block;
+        position: absolute;
+        top: 12px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        margin-right: auto;
+        font-size: 30px;
+     
     }
 
     .navbar {

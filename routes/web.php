@@ -45,11 +45,11 @@ Route::patch('/admin/updatePublicidad/{id}', [PublicidadController::class, 'upda
 
 
 Route::get('/', function(){
-    return redirect('/Recientes/oaxaca');
+    return redirect('/Recientes');
 });
 
-Route::get('/Recientes/{region}',[WebNewsController::class, 'Recientes']);
-Route::get('/Salud/{region}',[WebNewsController::class, 'Salud']);
-Route::get('/Economia/{region}',[WebNewsController::class, 'Economia']);
-Route::get('/Deportes/{region}',[WebNewsController::class, 'Deportes']);
-Route::get('/Covid/{region}',[WebNewsController::class, 'Covid']);
+Route::get('/Recientes',[WebNewsController::class, 'Recientes']);
+Route::get('/Salud',[WebNewsController::class, 'Salud']);
+Route::get('/Economia',[WebNewsController::class, 'Economia']);
+Route::get('/Deportes',[WebNewsController::class, 'Deportes']);
+Route::get('/Covid',[WebNewsController::class, 'Covid']);

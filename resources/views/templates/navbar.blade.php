@@ -11,7 +11,7 @@
             <ul class="ul-top">
               <button
                 class="navbar-li-region"
-                id="Oaxaca"
+                id="oaxaca"
               >
                 Oaxaca
               </button>
@@ -36,25 +36,25 @@
                   </a>
               </li>
               <li class="navbar-li" id="salud">
-                  <a href="{{url('/Salud/oaxaca')}}">
+                  <a href="{{url('/Salud')}}">
                     <i class="fas fa-stethoscope"> </i>
                     Salud
                   </a>
               </li>
               <li class="navbar-li" id="economia">
-                  <a href="{{url('/Economia/oaxaca')}}">
+                  <a href="{{url('/Economia')}}">
                     <i class="fas fa-dollar-sign"> </i>
                     Economia
                   </a>
               </li>
               <li class="navbar-li" id="deportes">
-                  <a href="{{url('/Deportes/oaxaca')}}">
+                  <a href="{{url('/Deportes')}}">
                     <i class="fas fa-basketball-ball"> </i>
                     Deportes
                   </a>
               </li>
               <li class="navbar-li" id="covid">
-                  <a href="{{url('/Covid/oaxaca')}}">
+                  <a href="{{url('/Covid')}}">
                     <i class="fas fa-virus"></i>
                     Covid
                   </a>
@@ -63,15 +63,29 @@
           </ul>
         </div>
       </nav>
-<script>
- 
-</script>
+
 @include('public.addTop')
 
 <div class="container mt-2">
+  <hr>
+
+  {{-- buscador --}}
+  <nav class="navbar-info">
+    <div class="container-lg container-md">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <ul>
+                <div class="search-container">
+                    <input type="text" placeholder="Buscar" id="inputSearch" class="input-search"/>
+                    <button class="btn-search" id="btnSearch"><i class="fas fa-search"></i></button>
+                </div>
+            </ul>
+        </div>
+    </div>
+    
+</nav>
   <h5>
     {{$sectionName}}
   </h5>
   
-  <hr id={{$sectionName}}/>
+  <hr id={{$sectionName}}>
   

@@ -20,43 +20,38 @@ class WebNewsController extends Controller
         $this->publicidad = new publicidad;  
     }   
     
-    public function Recientes($region){
+    public function Recientes(){
         $data['addsTop'] = $this->publicidad->getAdds('top');
         $data['addsBottom'] = $this->publicidad->getAdds('down');
         $data['sectionName'] = "Recientes";
-        $data['recientes'] = $this->modelNews->getNewsRecentToMobile($region);
         return view('public.recientes',$data);
     }
 
-    public function Salud($region){
+    public function Salud(){
         $data['addsTop'] = $this->publicidad->getAdds('top');
         $data['addsBottom'] = $this->publicidad->getAdds('down');
         $data['sectionName'] = "Salud";
-        $data['salud'] = $this->modelNews->getNewsHealthToMobile($region);
         return view('public.salud',$data);
     }
 
-    public function Economia($region){
+    public function Economia(){
         $data['addsTop'] = $this->publicidad->getAdds('top');
         $data['addsBottom'] = $this->publicidad->getAdds('down');
         $data['sectionName'] = "Economia";
-        $data['economia'] = $this->modelNews->getNewsEconomyToMobile($region);
         return view('public.economia',$data);
     }
 
-    public function Deportes($region){
+    public function Deportes(){
         $data['addsTop'] = $this->publicidad->getAdds('top');
         $data['addsBottom'] = $this->publicidad->getAdds('down');
         $data['sectionName'] = "Deportes";
-        $data['deportes'] = $this->modelNews->getNewsSportsToMobile($region);
         return view('public.deportes',$data);
     }
 
-    public function Covid($region){
+    public function Covid(){
         $data['addsTop'] = $this->publicidad->getAdds('top');
         $data['addsBottom'] = $this->publicidad->getAdds('down');
         $data['sectionName'] = "Covid";
-        $data['covid'] = $this->modelNews->getNewsCovidoMobile($region);
         return view('public.covid',$data);
     }
 }
