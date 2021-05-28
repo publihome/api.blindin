@@ -12,20 +12,24 @@ class NoticiasModel extends Model
 
 
     public function insertData($newsData){
+       var_dump($newsData);
         if(isset($newsData)){
             if(DB::table("noticias")->get() == ""){
             DB::table('noticias')->insert($newsData);
             }
             foreach ($newsData as $not) {
                 # code...
-                if (DB::table('noticias')->where('titulo',$not["titulo"] )->doesntExist()) {
-                    $data = DB::table('noticias')->insert($not);
+                if($not != ""){
+                    if (DB::table('noticias')->where('titulo',$not["titulo"] )->doesntExist()) {
+                        $data = DB::table('noticias')->insert($not);
+                    }
                 }
             }
         }
     } 
 
     public function getNewsRecientes($region,$tipo){
+       
         $noticias = DB::table("noticias")
             ->where("region","=",$region)
             ->where("categoria","=","Reciente")
@@ -104,7 +108,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Reciente")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 
@@ -114,7 +118,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Salud")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 
@@ -124,7 +128,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Economia")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 
@@ -134,7 +138,7 @@ class NoticiasModel extends Model
             ->where("categoria","=","Deportes")
             ->orderBy("fecha","desc")
             ->orderBy("hora","desc")
-            ->paginate(12);
+            ->paginate(22);
         return json_encode($noticias);
     }
 

@@ -1,5 +1,5 @@
     @include('templates.header')
-    @include('templates.navbar')
+    {{-- @include('templates.navbar') --}}
         @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
 
@@ -73,4 +73,4 @@
     </div>
 
 
-@include('templates.footer')
+{{-- @include('templates.footer') --}}

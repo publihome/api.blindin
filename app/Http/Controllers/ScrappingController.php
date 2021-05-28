@@ -23,11 +23,6 @@ class ScrappingController extends Controller
 
     public function index(Client $client) {
 
-        $imparcial = $this->imparcial($client);
-        $this->imparcialEconomy($client);
-        $this->imparcialHealth($client);
-        $this->imparcialSports($client);
-
         $this->rotativo($client);
         $this->rotativoEconomy($client);
         $this->rotativoSports($client);
@@ -41,33 +36,43 @@ class ScrappingController extends Controller
         $this->covidOax($client);
     }
 
+    public function oaxaca2(Client $client){
+        
+        $this->imparcial($client);
+        $this->imparcialEconomy($client);
+        $this->imparcialHealth($client);
+        $this->imparcialSports($client);
+
+    }
 
     public function imparcial(Client $client) {
-        $crawler = $client->request('GET', 'https://imparcialoaxaca.mx/ultima-hora/');
-
+        $crawler = $client->request('GET', 'https://imparcialoaxaca.mx/ultima-hora');
         $data = $crawler->filter(".article-post")->each(function($node) {
-            $noticias = array();
-            $title = explode("]",$node->filter(".post-content > h2" )->text());
-            $titleNew = $title[1];
-            $author = $node->filter(".post-content > ul > li")->eq(0)->text();
-            $date = $node->filter(".post-content > ul > li")->eq(1)->text();
+            $noticias = array();         
             $resumen_array = explode("Leer más", $node->filter(".post-content")->text());
             $resumen = $resumen_array[0];
-            $enlace = $node->filter(".post-content > a")->attr("href");
-            $image = $node->filter("img")->attr("src");
-            $textoinfo = explode($date,$resumen);
+            $enlace = $node->filter(".post-content > a")->attr("href"); 
+            $textoinfo = explode("]",$resumen);
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.single-post-box');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });   
+            $noticias["titulo"] = $dataContent->filter('.title-post > h1')->text();
+            $noticias["img"] = $dataContent->filter('.size-full')->attr("src");
+            $noticias["texto"] = json_encode($contentNew);
             $noticias["diario"] = "imparcial";
-            $noticias["titulo"] = $titleNew;
             $noticias["fecha"] = date("Y:m:d");
             $noticias["hora"] = date("G:i:s");
             $noticias["resumen"] = trim($textoinfo[1]);
             $noticias["categoria"] = "Reciente";
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "secundarias";
-
-
+             var_dump($resumen_array);
+             
+            
             return $noticias;
 
         });
@@ -78,23 +83,29 @@ class ScrappingController extends Controller
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/super-deportivo/');
         $data = $crawler->filter('.article-post')->each(function($node) {
             $sports = array();
-            $title = $node->filter(".post-content > h2")->text();
-            $resumen_array = explode("Leer más", $node->filter(".post-content")->text("sin texto"));;
+            $resumen_array = explode("Leer más", $node->filter(".post-content")->text("sin texto"));
             $resumen = $resumen_array[0];
             $enlace = $node->filter(".post-content > a")->attr("href");
-            $image = $node->filter("img")->attr("src");
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.single-post-box');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+
+            $sports["titulo"] = $dataContent->filter('.title-post > h1')->text();
+            $sports["img"] = $dataContent->filter('figure > img')->attr("src");
+            $sports["texto"] = json_encode($contentNew);
             $sports["diario"] = "imparcial";
-            $sports["titulo"] = $title;
             $sports["fecha"] = date("Y:m:d");
             $sports["hora"] = date("G:i:s");
             $sports["resumen"] = $resumen;
             $sports["categoria"] = "Deportes";
             $sports["url"] = $enlace;
-                $sports["img"] = $image;
             $sports["region"] = "oaxaca";
             $sports["tipo"] = "secundarias";
 
-
+            var_dump($sports);
             return $sports;
 
         });
@@ -105,19 +116,26 @@ class ScrappingController extends Controller
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/salud/');
         $data = $crawler->filter('.news-post')->each(function($node) {
             $health = array();
-            $title = $node->filter(".post-title > h2")->text();
             $enlace = $node->filter(".post-title > h2 > a")->attr("href");
             $resumen_array = explode("Leer más", $node->filter(".post-content")->text("sin texto"));;
             $resumen = $resumen_array[0];
-            $image = $node->filter("img")->attr("src");
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.single-post-box');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+
+            $health["titulo"] = $dataContent->filter('.title-post > h1')->text();
+            $health["img"] = $dataContent->filter('.size-full')->attr("src");
+            $health["texto"] = json_encode($contentNew);
+
             $health["diario"] = "imparcial" ;
-            $health["titulo"] = $title;
             $health["fecha"] = date("Y:m:d");
             $health["hora"] = date("G:i:s");
             $health["resumen"] = $resumen;
             $health["categoria"] = "salud";
             $health["url"] = $enlace;
-            $health["img"] = $image;
             $health["region"] = "oaxaca";
             $health["tipo"] = "secundarias";
             // var_dump($health);
@@ -133,23 +151,26 @@ class ScrappingController extends Controller
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/economia/');
         $data = $crawler->filter('.news-post')->each(function($node) {
             $economy = array();
-            $title = $node->filter(".post-title > h2")->text();
             $enlace = $node->filter(".post-title > h2 > a")->attr("href");
             $resumen_array = explode("Leer más", $node->filter(".post-content")->text("sin texto"));;
             $resumen = $resumen_array[0];
-            $image = $node->filter("img")->attr("src");
-            // var_dump($resumen);
-            // var_dump('<br>');
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.single-post-box');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
 
-
+            $economy["titulo"] = $dataContent->filter('.title-post > h1')->text();
+            $economy["img"] = $dataContent->filter('.size-full')->attr("src");
+            $economy["texto"] = json_encode($contentNew);
+            
             $economy["diario"] = "imparcial" ;
-            $economy["titulo"] = $title;
             $economy["fecha"] = date("Y:m:d");
             $economy["hora"] = date("G:i:s");
             $economy["resumen"] = $resumen;
             $economy["categoria"] = "Economia";
             $economy["url"] = $enlace;
-            $economy["img"] = $image;
             $economy["region"] = "oaxaca";
             $economy["tipo"] = "secundarias";
 
@@ -170,24 +191,28 @@ class ScrappingController extends Controller
         $crawler = $client->request('GET', 'http://www.rotativooaxaca.com.mx/');
         $data =  $crawler->filter('.category-mas-informacion')->each(function($node) {
             $noticias = array();
-
-            $title = $node->filter(".post-title > a")->text();
             $resumen = $node->filter(".entry > p")->text();
             $enlace = $node->filter(".entry > a")->attr("href");
-            $image = $node->filter("img")->attr("src");
-            $noticias["titulo"] = $title;
+
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.primary');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+
+            $noticias["titulo"] = $dataContent->filter('.post-title')->text();
+            $noticias["img"] = $dataContent->filter('.size-medium')->attr("src");
+            $noticias["texto"] = json_encode($contentNew);
+            
             $noticias["resumen"] = $resumen;
             $noticias["categoria"] = "Reciente";
             $noticias["fecha"] = date("Y:m:d");
             $noticias["diario"] = "rotativo";
             $noticias["hora"] = date("G:i:s");
             $noticias["tipo"] = "primarias";
-
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
             $noticias["region"] = "oaxaca";
-
-
             return $noticias;
         });
         $this->insertData($data);
@@ -206,7 +231,18 @@ class ScrappingController extends Controller
             $resumen = $node->filter(".news__excerpt > p")->text();
             $enlace = $url.''.$node->filter(".news__title > a")->attr("href");
             $image = $url.''.$node->filter("img")->attr("src");
+
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.newsfull__body');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+
             $noticias["titulo"] = $title;
+            
+            $noticias["img"] = $image;
+            $noticias["texto"] = json_encode($contentNew);           
             $noticias["resumen"] = $resumen;
             $noticias["categoria"] = "Economia";
             $noticias["fecha"] = date("Y:m:d");
@@ -214,7 +250,6 @@ class ScrappingController extends Controller
             $noticias["hora"] = date("G:i:s");
             $noticias["tipo"] = "primarias";
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
             $noticias["region"] = "oaxaca";
             // var_dump($noticias);
             return $noticias;
@@ -233,6 +268,13 @@ class ScrappingController extends Controller
             $enlace = $node->filter(".post-thumbnail > a")->attr("href");
             $image = $node->filter("img")->attr("src");
 
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.entry');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+            $sports["texto"] = json_encode($contentNew);           
             $sports["tipo"] = "primarias";
             $sports["titulo"] = $title;
             $sports["resumen"] = $resumen;
@@ -243,13 +285,14 @@ class ScrappingController extends Controller
             $sports["url"] = $enlace;
             $sports["img"] = $image;
             $sports["region"] = "oaxaca";
+            // var_dump($sports);
             return $sports;
         });
 
         $this->insertData($data);
     }
 
-
+/* cambiar esta noticia ya es muy vieja */
 
     public function milenioHealth(Client $client) {
         $crawler = $client->request("GET", "https://www.milenio.com/temas/secretaria-de-salud-oaxaca");
@@ -261,8 +304,15 @@ class ScrappingController extends Controller
             $enlace = $url ."". $node->filter(".title > a")->attr("href");
             $image = $url ."". $node->filter('img')->attr("data-lazy");
             // var_dump($title);
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.content-body');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
 
             $health["titulo"] = $title;
+            $health["texto"] = json_encode($contentNew);
             $health["resumen"] = $resumen;
             $health["categoria"] = "Salud";
             $health["fecha"] = date("Y:m:d");
@@ -279,16 +329,26 @@ class ScrappingController extends Controller
         $this->insertData($data);
     }
 
+/** fin de noticia */
+
     public function quadratin(Client $client) {
         $crawler = $client->request('GET', 'https://www.rioaxaca.com/category/estado-general/estado-locales/');
         $data =  $crawler->filter('.td_module_11 ')->each(function($node) {
             $noticias = array();
-            $url = "https://www.nvinoticias.com";
 
             $title = $node->filter(".entry-title > a")->text();
             $enlace = $node->filter(".entry-title > a")->attr("href");
             $image = $node->filter("img")->attr("src");
             $resumen = $node->filter(".td-excerpt")->text();
+
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.td-post-content');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+
+            $noticias["texto"] = json_encode($contentNew);           
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -301,68 +361,14 @@ class ScrappingController extends Controller
             $noticias["tipo"] = "terciarias";
             // var_dump($noticias);
 
-             return $noticias;
+            return $noticias;
         });
 
         $this->insertData($data);
     }
 
-    // public function tiempo(Client $client) {
-    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/oaxaca/');
-    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
-    //         $noticias = array();
 
-    //         $title = $node->filter(".entry-title")->text();
-    //         $enlace = $node->filter(".entry-title > a")->attr("href");
-    //         $image = $node->filter("img")->attr("src");
-    //         $noticias["hora"] = date("G:i:s");
-    //         $noticias["fecha"] = date("Y:m:d");
-    //         $noticias["titulo"] = $title;
-    //         $noticias["diario"] = "tiempo";
-    //         $noticias["resumen"] = "";
-    //         $noticias["url"] = $enlace;
-    //         $noticias["img"] = $image;
-    //         $noticias["categoria"] = "Reciente";
-    //         $noticias["region"] = "oaxaca";
-    //         $noticias["tipo"] = "terciarias";
-
-
-    //         var_dump($noticias);
-
-    //          return $noticias;
-    //     });
-
-    //      $this->insertData($data);
-    // }
-
-    // public function quadratinSports(Client $client) {
-    //     $crawler = $client->request('GET', 'https://oaxaca.quadratin.com.mx/deportes/');
-    //     $data =  $crawler->filter('.col-lg-6')->each(function($node) {
-    //         $noticias = array();
-
-    //         $title = $node->filter(".box-content > a > h4")->text();
-    //         $enlace = $node->filter(".box-content > a")->attr("href");
-    //         $image = $node->filter("img")->attr("src");
-    //         $resumen = $node->filter(".box-content > a > p")->text();
-    //         $noticias["hora"] = date("G:i:s");
-    //         $noticias["fecha"] = date("Y:m:d");
-    //         $noticias["titulo"] = $title;
-    //         $noticias["diario"] = "quadratin";
-    //         $noticias["resumen"] = $resumen;
-    //         $noticias["url"] = $enlace;
-    //         $noticias["img"] = $image;
-    //         $noticias["categoria"] = "Deportes";
-    //         $noticias["region"] = "oaxaca";
-    //         $noticias["tipo"] = "terciarias";
-
-
-    //         // var_dump($noticias);
-
-    //          return $noticias;
-    //     });
-
-    //     $this->insertData($data);
-    // }
+    /******************** me quede en la anterior ******************** */
 
     public function quadratinSports(Client $client) {
         $crawler = $client->request('GET', 'https://www.encuentroradiotv.com/index.php/deportes');
@@ -374,6 +380,14 @@ class ScrappingController extends Controller
             $enlace = $url .''.$node->filter(".catItemTitle > a")->attr("href");
             $resumen = $node->filter(".catItemIntroText")->text();
             $image = $url .''.$node->filter("img")->attr("src");
+
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.itemFullText');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+            $noticias["texto"] = json_encode($contentNew);           
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -387,37 +401,13 @@ class ScrappingController extends Controller
 
             // var_dump($noticias);
 
-             return $noticias;
+            return $noticias;
         });
 
         $this->insertData($data);
     }
 
 
-    // public function tiempoSports(Client $client) {
-    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/deportes/');
-    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
-    //         $sports = array();
-
-    //         $title = $node->filter(".entry-title")->text();
-    //         $enlace = $node->filter(".entry-title > a")->attr("href");
-    //         $image = $node->filter("img")->attr("src");
-    //         $sports["hora"] = date("G:i:s");
-    //         $sports["fecha"] = date("Y:m:d");
-    //         $sports["titulo"] = $title;
-    //         $sports["diario"] = "tiempo";
-    //         $sports["resumen"] = "";
-    //         $sports["url"] = $enlace;
-    //         $sports["img"] = $image;
-    //         $sports["categoria"] = "Deportes";
-    //         $sports["region"] = "oaxaca";
-    //         $sports["tipo"] = "terciarias";
-
-    //         return $sports;
-    //     });
-
-    //     $this->insertData($data);
-    // }
 
     public function oaxacaEconomy(Client $client) {
         $crawler = $client->request('GET', 'https://www.encuentroradiotv.com/index.php/finanzas');
@@ -429,6 +419,13 @@ class ScrappingController extends Controller
             $enlace = $url .''.$node->filter(".catItemTitle > a")->attr("href");
             $resumen = $node->filter(".catItemIntroText")->text();
             $image = $url .''.$node->filter("img")->attr("src");
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.itemFullText');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+            $noticias["texto"] = json_encode($contentNew);   
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -440,9 +437,9 @@ class ScrappingController extends Controller
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "terciarias";
 
-            // var_dump($image);
+            // var_dump($noticias);
 
-             return $noticias;
+            return $noticias;
         });
 
         $this->insertData($data);
@@ -459,6 +456,14 @@ class ScrappingController extends Controller
             $enlace = $node->filter(".entry-title > a")->attr("href");
             $resumen = $node->filter(".entry-content > p")->text();
             $image = $node->filter("img")->attr("src");
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.entry-content');
+            $contentNew = $dataContent->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+            $noticias["texto"] = json_encode($contentNew); 
+            
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -472,64 +477,11 @@ class ScrappingController extends Controller
 
             // var_dump($noticias);
 
-             return $noticias;
+            return $noticias;
         });
 
         $this->insertData($data);
     }
-
-
-    // public function tiempoHealth(Client $client) {
-    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/salud/');
-    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
-    //         $health = array();
-
-    //         $title = $node->filter(".entry-title")->text();
-    //         $enlace = $node->filter(".entry-title > a")->attr("href");
-    //         $image = $node->filter("img")->attr("src");
-    //         $health["hora"] = date("G:i:s");
-    //         $health["fecha"] = date("Y:m:d");
-    //         $health["titulo"] = $title;
-    //         $health["diario"] = "tiempo";
-    //         $health["resumen"] = "";
-    //         $health["url"] = $enlace;
-    //         $health["img"] = $image;
-    //         $health["categoria"] = "Salud";
-    //         $health["region"] = "oaxaca";
-    //         $health["tipo"] = "terciarias";
-
-    //         return $health;
-
-    //     });
-
-    //     $this->insertData($data);
-    // }
-
-
-    // public function tiempoEconomy(Client $client) {
-    //     $crawler = $client->request('GET', 'https://tiempodigital.mx/category/secciones/finanzas/');
-    //     $data =  $crawler->filter('.td_module_1')->each(function($node) {
-    //         $economy = array();
-
-    //         $title = $node->filter(".entry-title")->text();
-    //         $enlace = $node->filter(".entry-title > a")->attr("href");
-    //         $image = $node->filter("img")->attr("src");
-    //         $economy["hora"] = date("G:i:s");
-    //         $economy["fecha"] = date("Y:m:d");
-    //         $economy["titulo"] = $title;
-    //         $economy["diario"] = "tiempo";
-    //         $economy["resumen"] = "";
-    //         $economy["url"] = $enlace;
-    //         $economy["img"] = $image;
-    //         $economy["categoria"] = "Economia";
-    //         $economy["region"] = "oaxaca";
-    //         $economy["tipo"] = "terciarias";
-    //         // var_dump($economy);
-    //         return $economy;
-    //     });
-
-    //     $this->insertData($data);
-    // }
 
 
     public function covidOax(Client $client) {
@@ -540,7 +492,16 @@ class ScrappingController extends Controller
             $title = $node->filter(".post-title > h2 > a" )->text();
             $resumen = $node->filter(".post-content")->text("");
             $enlace = $node->filter(".post-title >h2> a")->attr("href");
-            $image = $node->filter("img")->attr("src");
+            // $image = $node->filter("img")->attr("src");
+
+            $client = new Client();
+            $scrap = $client->request('GET', $enlace);
+            $dataContent = $scrap->filter('.single-post-box');
+            $dataContentText = $scrap->filter('.the-content');
+            $contentNew = $dataContentText->filter('p')->each(function($textnew){
+                return  $textnew->filter('p')->text();
+            });
+            $noticias["texto"] = json_encode($contentNew); 
             $noticias["diario"] = "imparcial";
             $noticias["titulo"] = $title;
             $noticias["fecha"] = date("Y:m:d");
@@ -548,10 +509,11 @@ class ScrappingController extends Controller
             $noticias["resumen"] = trim($resumen);
             $noticias["categoria"] = "Covid";
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
+            $noticias["img"] = $dataContent->filter('.size-full')->attr("src");
+
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "primarias";
-            var_dump($noticias);
+            // var_dump($noticias);
             return $noticias;
 
         });
@@ -564,6 +526,7 @@ class ScrappingController extends Controller
     public function insertData($newsData){
         $db = new NoticiasModel;
         $db->insertData($newsData);
+        
     }
 
 }
