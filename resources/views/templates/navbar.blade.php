@@ -35,7 +35,7 @@
                     <i class="far fa-clock"></i>Recientes
                   </a>
               </li>
-              <li class="navbar-li" id="salud" @if(url('/Salud')) class="active-link-salud" @endif>
+              <li class="navbar-li" id="salud">
                   <a href="{{url('/Salud/oaxaca')}}">
                     <i class="fas fa-stethoscope"> </i>
                     Salud
@@ -64,11 +64,7 @@
         </div>
       </nav>
 <script>
-  $('#btn-menu').click(function(e){
-    console.log("hola")
-    // e.preventDefault()
-    $('.drop-menu').toggle('slow')
-  })
+ 
 </script>
 @include('public.addTop')
 
