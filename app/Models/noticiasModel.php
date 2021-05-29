@@ -95,7 +95,7 @@ class NoticiasModel extends Model
                     ->orWhere("tipo", "like", '%'.$word."%")
                     ->orderBy("fecha","desc")
                     ->orderBy("hora","desc")
-                    ->paginate(6);
+                    ->paginate(22);
         return json_encode($new);
     }
 

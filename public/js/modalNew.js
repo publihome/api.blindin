@@ -1,13 +1,23 @@
-let $news = document.querySelectorAll(".target")
-console.log(news)
+function getNewData(id){
+    console.log(id)
 
-    $news.forEach(newSelected => {
-        console.log(newSelected)
-        newSelected.addEventListener('click', function(e){
-            e.preventDefault()
-            console.log(newSelected.getAttribute('id'))
-            // let newSelectedId = newSelected.getAttribute('id')
-            // let k = news.filter(ele => { return ele.id == newSelectedId})
-               
-        })
-    });
+    let newData = news.filter(x => x.id == id)
+    console.log(newData)
+    const  $modalTitle = document.querySelector("#modalTitle")
+    const  $imagenNew = document.querySelector("#imagenNew")
+    const  $modalNewText = document.querySelector("#modalNewText")
+    newData.map(ND => {
+    let newText = JSON.parse(ND.texto)
+       
+    $modalTitle.innerHTML = ND.titulo
+    if (ND.img != "without image"){
+        $imagenNew.innerHTML = `<img src="${ND.img}" alt="${ND.titulo}" class="img-new-post">`
+    } 
+    newText.map(NT => $modalNewText.innerHTML += `<p>${NT}</p> `)
+
+    $('#Modalnew').modal('show')
+       
+
+    })
+
+}

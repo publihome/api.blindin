@@ -78,6 +78,8 @@
                     <input type="text" placeholder="Buscar" id="inputSearch" class="input-search"/>
                     <button class="btn-search" id="btnSearch"><i class="fas fa-search"></i></button>
                 </div>
+                <small class="text-warning bg-dark mt-2" id="textNoNews">
+                </small>
             </ul>
         </div>
     </div>
