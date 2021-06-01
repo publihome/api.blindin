@@ -22,7 +22,7 @@ class PublicidadController extends Controller
         $publicidad = new Publicidad;
         $data["anuncios"] = $publicidad->get();
 
-        return view('publicidad.index',$data);
+        return view('admin.publicidad.index',$data);
     }
 
     /**
@@ -64,15 +64,10 @@ class PublicidadController extends Controller
         if($request->hasFile('image')){
             $data['image'] = $request->file('image')->store('uploads','public');
         }
-
-
-
-
-
         $data['clicks'] = 0;
         $publicidad = new publicidad;
         $publicidad->add($data);
-        return redirect('admin')->with("mensaje", "Anuncio agregado correctamente");
+        return redirect('admin/publicidad')->with("mensaje", "Anuncio agregado correctamente");
     }
 
     /**
@@ -97,7 +92,7 @@ class PublicidadController extends Controller
         //
         $publicidad = new publicidad;
         $data["anuncio"] = $publicidad->getById($id);
-        return view('publicidad.edit',$data);
+        return view('admin.publicidad.edit',$data);
 
     }
 
@@ -141,7 +136,7 @@ class PublicidadController extends Controller
         $this->validate($request, $fields, $message);
 
         $publicidad->updateData($data, $id);
-        return redirect('admin')->with('mensaje', 'Anucio actualizado correctamente!');
+        return redirect('admin/publicidad')->with('mensaje', 'Anucio actualizado correctamente!');
     }
 
     /**
@@ -162,7 +157,7 @@ class PublicidadController extends Controller
                 $publicidad->deleteData($id);
             }
         }
-        return redirect('admin')->with('mensaje','Anuncio eliminado');
+        return redirect('admin/publicidad')->with('mensaje','Anuncio eliminado');
     }
 
     public function getAddsForApi(UrlGenerator $url, $ubicacion){

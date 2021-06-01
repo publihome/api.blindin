@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebNewsController;
 use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NoticiasController;
+
 /*
 |-----------------------------------------|--------------------------------------------------------------------------
 ---------------------------------
@@ -32,13 +35,24 @@ Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'loginValidate']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
+// administrador
 
 
-Route::get('/admin', [PublicidadController::class, 'index']);
+Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/noticias', [NoticiasController::class, 'index']);
+Route::get('/admin/noticias/agregar', [NoticiasController::class, 'add']);
+Route::post('/admin/noticias/guardar', [NoticiasController::class, 'store']);
+
+
+// Publicidad
+
+Route::get('/admin/publicidad', [PublicidadController::class, 'index']);
 Route::post('/admin/addPublicidad', [PublicidadController::class, 'store']);
 Route::delete('/admin/deletePublicidad/{id}', [PublicidadController::class, 'destroy']);
 Route::get('/admin/editPublicidad/{id}', [PublicidadController::class, 'edit']);
 Route::patch('/admin/updatePublicidad/{id}', [PublicidadController::class, 'update']);
+
+
 
 
 //Recientes

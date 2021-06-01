@@ -1,6 +1,6 @@
 let uri = window.location.pathname
 let path = uri.slice(1,uri.length).toLowerCase()
-const url_base = "http://blindin.mx/api"
+const url_base = "https://blindin.mx/api"
 let link = document.getElementById(path)
 link.classList.add(`active-link-${path}`)
 const $btnSearch = document.getElementById("btnSearch")
@@ -27,6 +27,8 @@ function postData(){
             </div>
         </div>`
     })
+
+    
 }
 
 function getData(){
@@ -39,11 +41,10 @@ function getData(){
 }
 
 window.addEventListener('scroll', function(){
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    if ((window.innerHeight + window.scrollY) == (document.body.offsetHeight)) {
     // if((document.innerHeight + window.scrollY) == document.body.offsetHeight){
         getData()
         page= page + 1
-        console.log("que paso?")
         console.log(window.scrollY + window.innerHeight)
         console.log(document.body.offsetHeight)
     }

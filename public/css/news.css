@@ -199,3 +199,49 @@
         height: auto;
     }
 }
+
+@media (min-width: 576px) and (max-width: 767.98px){
+
+    .title-new{
+        justify-content: center;
+        text-align: center;
+        margin: 0px;
+        margin-bottom: 10px;
+        color: #0A5FC0;
+        font-size: 26px;
+    }
+
+    .new-content{
+        margin: 0px;
+    }
+    
+    .cont-img-new{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: auto;
+    
+    }
+    
+    .new-content{
+        padding-top: 13px;
+
+    }
+
+    .new-content > p{
+        text-align: justify;
+        font-size: 18px;
+    }
+    
+    
+    .img-new-post{
+        width: 100%;
+        height: auto;
+    }
+
+    .modal-xl{
+        width: 90%;
+    }
+
+
+}

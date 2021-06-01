@@ -12,7 +12,6 @@ class NoticiasModel extends Model
 
 
     public function insertData($newsData){
-       var_dump($newsData);
         if(isset($newsData)){
             if(DB::table("noticias")->get() == ""){
             DB::table('noticias')->insert($newsData);
@@ -27,6 +26,10 @@ class NoticiasModel extends Model
             }
         }
     } 
+
+    public function saveNew($new){
+        DB::table('noticias')->insert($new);
+    }
 
     public function getNewsRecientes($region,$tipo){
        

@@ -1,5 +1,5 @@
     @include('templates.header')
-    {{-- @include('templates.navbar') --}}
+    @include('templates.navbarAdmin')
         @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
 
@@ -7,7 +7,8 @@
         {{Session::get('mensaje')}}
     </div>
         @endif
-        <div class="d-flex mb-2">
+        
+        <div class="d-flex my-2">
             <button class="btn btn-success ml-auto" data-bs-toggle="modal" data-bs-target="#modelAdd">Agregar</button>
         </div>
 
@@ -19,7 +20,7 @@
         @endif
         
 
-        <div class="list-group col-md-8 mx-auto">
+        <div class="list-group col-md-12 mx-auto">
             @foreach ($anuncios as $anuncio)
                 <div class="list-group-item list-group-item-action d-flex flex-row justify-content-start" >
                     <div class="img">
