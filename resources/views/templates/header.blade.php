@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{asset('storage/images/icon.png')}}" />
-
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XE0D614GMQ"></script>
+    
     <title>Blindin</title>
+    <link rel="icon" href="{{asset('storage/images/icon.png')}}" />
+    <meta name="keywords" 
+      content="blindin, noticias, blindin noticias, oaxaca, mexico, noticias oaxaca, noticias hoy, noticias recientes"
+    >
+    <meta name="application-name" content="BLINDIN">
+    <meta name="description" content="Portal de noticias de oaxaca y mexico, las mejores noticias en una sola pagina.">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     {{-- bootstrap 5 --}}
     <!-- CSS only -->

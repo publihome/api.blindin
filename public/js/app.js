@@ -5,12 +5,21 @@ let link = document.getElementById(path)
 link.classList.add(`active-link-${path}`)
 const $btnSearch = document.getElementById("btnSearch")
 let $inputSearch = document.getElementById("inputSearch")
+const metaDescription = document.querySelector('meta[name="description"]')
 let page = 1
 
 let urls = {
     recientes: 'recent',
     salud: 'health',
     economia: 'economy',
+    deportes: 'Espacio informatio de noticias sobre deportes',
+    covid: 'noticias de covid en oaxaca'
+}
+
+let description = {
+    recientes: 'noticias de hoy, espacio informativo de noticias recientes',
+    salud: 'Espacio informatio de noticias sobre salud',
+    economia: 'Espacio informatio de noticias sobre economia de oaxaca',
     deportes: 'sports',
     covid: 'covid'
 }
@@ -26,9 +35,7 @@ function postData(){
                     <p class="title">${n.titulo}</p>
             </div>
         </div>`
-    })
-
-    
+    })    
 }
 
 function getData(){
@@ -37,12 +44,13 @@ function getData(){
         console.log(data)
         news = data.data
         postData()
+        seo()
+
     });
 }
 
 window.addEventListener('scroll', function(){
     if ((window.innerHeight + window.scrollY) == (document.body.offsetHeight)) {
-    // if((document.innerHeight + window.scrollY) == document.body.offsetHeight){
         getData()
         page= page + 1
         console.log(window.scrollY + window.innerHeight)
@@ -50,4 +58,10 @@ window.addEventListener('scroll', function(){
     }
     
 })
+
+function seo(){
+    window.title = `BLINDIN | ${path.toUpperCase()}`
+    metaDescription.setAttribute('content', description[path])
+    
+}
 
