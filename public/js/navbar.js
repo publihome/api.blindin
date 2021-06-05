@@ -60,6 +60,12 @@ function getSearchNews(word){
 
 }
 
+document.querySelector('#inputSearch').addEventListener('click', function(e){
+    document.querySelector('#textNoNews').innerHTML = ''
+
+
+})
+
 window.btnSearch.addEventListener('click', function(e){
     e.preventDefault()
     $input = document.getElementById('inputSearch')

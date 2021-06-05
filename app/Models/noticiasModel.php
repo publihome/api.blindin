@@ -12,13 +12,16 @@ class NoticiasModel extends Model
 
 
     public function insertData($newsData){
+        var_dump($newsData);
+        // exit;
         if(isset($newsData)){
             if(DB::table("noticias")->get() == ""){
             DB::table('noticias')->insert($newsData);
             }
             foreach ($newsData as $not) {
                 # code...
-                if($not != ""){
+                if($not != "" and $not['texto'] != ""){
+                
                     if (DB::table('noticias')->where('titulo',$not["titulo"] )->doesntExist()) {
                         $data = DB::table('noticias')->insert($not);
                     }
@@ -29,6 +32,23 @@ class NoticiasModel extends Model
 
     public function saveNew($new){
         DB::table('noticias')->insert($new);
+    }
+
+    public function getById($idNew){
+        $sql = DB::table('noticias')
+            ->where('id',"=",$idNew)
+            ->get();
+        return $sql;
+    }
+
+    public function getNewsBlindin(){
+        $noticias = DB::table('noticias')
+            ->where('diario', "=", 'blindin')
+            ->orderBy("fecha","desc")
+            ->orderBy("hora","desc")
+            ->get();
+
+        return $noticias;
     }
 
     public function getNewsRecientes($region,$tipo){
@@ -153,6 +173,16 @@ class NoticiasModel extends Model
             ->orderBy("hora","desc")
             ->paginate(12);
         return json_encode($noticias);
+    }
+
+    public function updateNew($id, $data){
+        DB::table('noticias')->where('id', $id)->update($data);
+    }
+
+    public function deleteNew($idNew){
+        if (DB::table('noticias')->where('id', $idNew)->exists()) {
+            DB::table('noticias')->where('id', "=", $idNew)->delete();
+        }
     }
 
 

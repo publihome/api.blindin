@@ -1,7 +1,14 @@
 
 
 
+.buttons{
+    display: none;
+}
 
+.active {
+    background: #0A5FC0;
+    color: white;
+}
 
 .target{
     max-width: 100%;
@@ -9,10 +16,19 @@
     height: 300px;
     max-height: 300px;
     position: relative;
+    background: var(--white);
 }
 
 .target:hover {
     cursor: pointer;
+}
+
+.target:hover > .buttons{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 50%;
 }
 
 .target:hover > .text-overlay{
@@ -25,7 +41,6 @@
     animation: bg-animation .6s linear; 
     animation-fill-mode: both;
 }
-
 
 @keyframes bg-animation {
     0% { 

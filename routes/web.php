@@ -39,9 +39,9 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/admin/noticias', [NoticiasController::class, 'index']);
-Route::get('/admin/noticias/agregar', [NoticiasController::class, 'add']);
-Route::post('/admin/noticias/guardar', [NoticiasController::class, 'store']);
+Route::resource('/admin/noticias', NoticiasController::class);
+// Route::get('/admin/noticias/agregar', [NoticiasController::class, 'add']);
+// Route::post('/admin/noticias/guardar', [NoticiasController::class, 'store']);
 
 
 // Publicidad

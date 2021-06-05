@@ -57,12 +57,10 @@ class PublicidadController extends Controller
         ];
 
         $this->validate($request, $fields, $message);
-
         $data = request()->except('_token');
-
-
         if($request->hasFile('image')){
             $data['image'] = $request->file('image')->store('uploads','public');
+            
         }
         $data['clicks'] = 0;
         $publicidad = new publicidad;
