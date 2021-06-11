@@ -3,6 +3,8 @@ const $mexicobtn = document.getElementById('nacional')
 let region;
 let news
 
+console.log(localStorage.getItem('region'))
+
 $('#btn-menu').click(function(e){
     $('.drop-menu').toggle('slow')
   })
@@ -16,7 +18,7 @@ function setRegion(reg = ""){
         region = reg   
         localStorage.setItem('region',region)     
     }
-    if(localStorage.getItem('region') == ""){
+    if(localStorage.getItem('region') == "" || localStorage.getItem('region') == null){
         localStorage.setItem('region', 'oaxaca')
         region = 'oaxaca'
         $oaxacabtn.classList.add('btn-active-region')
