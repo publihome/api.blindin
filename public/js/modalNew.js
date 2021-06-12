@@ -1,12 +1,10 @@
-function getNewData(id){
-    console.log(id)
+function openModal(data){
 
-    let newData = news.filter(x => x.id == id)
-    console.log(newData)
+    // console.log(newData)
     const  $modalTitle = document.querySelector("#modalTitle")
     const  $imagenNew = document.querySelector("#imagenNew")
     const  $modalNewText = document.querySelector("#modalNewText")
-    newData.map(ND => {
+    data.map(ND => {
     let newText = JSON.parse(ND.texto)
        
     $modalTitle.innerHTML = ND.titulo

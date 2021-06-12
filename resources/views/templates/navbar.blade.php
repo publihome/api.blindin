@@ -1,3 +1,7 @@
+      <div  id="loaderPrincipal">
+        <img src="{{asset('storage').'/images/icon.png'}}" alt="logo" class="loader-principal" />
+      </div>
+
       <nav class="navbar-head">
         <div class="container">
             <img src="{{asset('storage').'/images/blindin_logo.png'}}" alt="logo" class="logo" />
@@ -64,10 +68,12 @@
         </div>
       </nav>
 
+
 @include('public.addTop')
 
-<div class="container mt-2">
+<div class="container mt-2 ">
   <hr>
+  
 
   {{-- buscador --}}
   <nav class="navbar-info">
@@ -90,4 +96,6 @@
   </h5>
   
   <hr id={{$sectionName}}>
+
+ 
   

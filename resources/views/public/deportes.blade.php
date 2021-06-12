@@ -3,6 +3,7 @@
 
 <div class="row" id="content">
 
+    
 </div>
 
 @include('templates.footer')

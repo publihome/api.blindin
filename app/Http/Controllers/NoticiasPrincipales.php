@@ -12,66 +12,62 @@ use App\Models\NoticiasModel;
 class NoticiasPrincipales extends Controller
 {
     //
-    public function __construct(){
-
-    }
     public $tipo = "primarias";
+    private $db;
+    public function __construct(){
+        $this->db = new NoticiasModel;
+    }
+
 
     public function index($region){
-        $db = new NoticiasModel;
-        return $db->getNewsRecientes($region,$this->tipo);
+        return $this->db->getNewsRecientes($region,$this->tipo);
     }
 
     public function sports($region){
-        $db = new NoticiasModel;
-        return $db->getNewsSports($region,$this->tipo);
+        return $this->db->getNewsSports($region,$this->tipo);
     }
 
     public function health($region){
-        $db = new NoticiasModel;
-        return $db->getNewsHealth($region,$this->tipo);
+        return $this->db->getNewsHealth($region,$this->tipo);
     }
 
     public function economy($region){
-        $db = new NoticiasModel;
-        return $db->getNewsEconomy($region,$this->tipo);
+        return $this->db->getNewsEconomy($region,$this->tipo);
     }
 
     public function getCovidNews($region){
-        $db = new NoticiasModel;
-        return $db->getNewsCovid($region, $this->tipo);
+        return $this->db->getNewsCovid($region, $this->tipo);
     }
 
 
     //controllres to mobile
 
     public function RecentMobile($region){
-        $db = new NoticiasModel;
-        return $db->getNewsRecentToMobile($region);
+        return $this->db->getNewsRecentToMobile($region);
 
     }
 
     public function HealthMobile($region){
-        $db = new NoticiasModel;
-        return $db->getNewsHealthToMobile($region);
+        return $this->db->getNewsHealthToMobile($region);
         
     }
 
     public function EconomyMobile($region){
-        $db = new NoticiasModel;
-        return $db->getNewsEconomyToMobile($region);
+        return $this->db->getNewsEconomyToMobile($region);
         
     }
 
+    public function getNewById($idNew){
+        return $this->db->getNewById($idNew);
+    }
+
     public function SportsMobile($region){
-        $db = new NoticiasModel;
-        return $db->getNewsSportsToMobile($region);
+        return $this->db->getNewsSportsToMobile($region);
         
     }
 
     public function covidMobile($region){
-        $db = new NoticiasModel;
-        return $db->getNewsCovidToMobile($region);
+        return $this->db->getNewsCovidToMobile($region);
         
     }
 

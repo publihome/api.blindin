@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl ">
       <div class="modal-content">
         <div class="modal-header">
-            <img src="{{url('storage').'/images/blindin_logo.png'}}" alt="logo" class="logo">
+            <img src="{{url('storage').'/images/blindin_logo.png'}}" alt="logo" class="logo-modal">
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

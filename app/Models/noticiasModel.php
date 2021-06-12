@@ -185,6 +185,14 @@ class NoticiasModel extends Model
         }
     }
 
+    public function getNewById($idNew){
+        if (DB::table('noticias')->where('id', $idNew)->exists()) {
+            return DB::table('noticias')->where('id',$idNew)->get();
+        }else{
+            return "no existe id";
+        }
+    }
+
 
     
 }

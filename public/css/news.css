@@ -54,6 +54,70 @@
     
 }
 
+@keyframes regreso {
+    0%{
+        transform: rotate(-35deg);
+    }
+
+    50% {
+        transform: rotate(35deg);
+    }
+    100%{
+        transform: rotate(-35deg);
+    }
+
+}
+
+@keyframes rodar {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(365deg);
+    }
+}
+
+#loaderPrincipal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    background: white; 
+
+}
+
+.loader{
+    position: fixed;
+    bottom: 150px;
+     left: 50%;
+    right: 50%;
+    background: white; 
+
+}
+
+.loader-principal{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100px;
+    margin: auto;
+    animation: regreso ease 2s infinite ;
+}
+
+
+.img-loader{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100px;
+    margin: auto;
+    animation: rodar ease 1s infinite ;
+    z-index: 999;
+    
+
+
+}
+
 
 
 .img-principal{
@@ -133,6 +197,7 @@
     text-align: center;
     margin: 15px;
     color: #0A5FC0;
+    font-size: 32px;
 }
 
 .cont-img-new{
@@ -155,9 +220,18 @@
     height: auto;
 }
 
+.logo-modal{
+    width: 200px;
+}
+
+
 @media only screen and (max-width: 575.98px){
     .p-1{
         padding: 0px!important;
+    }
+
+    .logo-modal{
+        width: 100px;
     }
 
     .title{
@@ -183,7 +257,7 @@
         margin: 0px;
         margin-bottom: 10px;
         color: #0A5FC0;
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .new-content{
@@ -212,6 +286,48 @@
     .img-new-post{
         width: 100%;
         height: auto;
+    }
+
+        
+    #loaderPrincipal{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        right: 50%;
+        background: white; 
+
+    }
+
+    .loader{
+        position: fixed;
+        bottom: 150px;
+        left: 50%;
+        right: 50%;
+        background: white; 
+
+    }
+
+    .loader-principal{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        width: 50px;
+        margin: auto;
+        animation: regreso ease 2s infinite ;
+    }
+
+
+    .img-loader{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        width: 50px;
+        margin: auto;
+        animation: rodar ease 1s infinite ;
+        z-index: 999;
+        
+
+
     }
 }
 

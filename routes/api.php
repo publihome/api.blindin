@@ -62,6 +62,7 @@ Route::get("/adds/{ubicacion}",[PublicidadController::class, 'getAdds']);
 Route::post("/adds/clicked/{id}",[PublicidadController::class, 'setClick']);
 
 Route::get("/covid/{region}",[NoticiasPrincipales::class, 'getCovidNews']);
+Route::get("/new/{id}",[NoticiasPrincipales::class, 'getNewById']);
 
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
 Route::get("/oaxaca2",[ScrappingController::class, 'oaxaca2']);
