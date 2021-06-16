@@ -9,7 +9,8 @@ use App\Models\NoticiasModel;
 class ScrappingController extends Controller
 {
     //
-
+        
+        private $count = 0;
     public function __construct(){
         $db = new NoticiasModel;
     }
@@ -79,22 +80,26 @@ class ScrappingController extends Controller
         $this->insertData($data);
      }
 
+    //queda pendiente 
+
      public function imparcialSports(Client $client) {
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/super-deportivo/');
-        $data = $crawler->filter('.article-post')->each(function($node) {
+        $data = $crawler->filter('.article-post')->siblings()->each(function($node) {
+                       
             $sports = array();
-            $resumen_array = explode("Leer más", $node->filter(".post-content")->text("sin texto"));
-            $resumen = $resumen_array[0];
-            $enlace = $node->filter(".post-content > a")->attr("href");
+            
+            $resumen = $node->filter(".post-tags")->text("sin texto");
+            $enlace = $node->filter(".post-content > h2 > a")->attr("href");
+            $title = $node->filter(".post-content > h2 > a")->text();
             $client = new Client();
             $scrap = $client->request('GET', $enlace);
-            $dataContent = $scrap->filter('.single-post-box');
+            $dataContent = $scrap->filter('.the-content');
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
 
-            $sports["titulo"] = $dataContent->filter('.title-post > h1')->text();
-            $sports["img"] = $dataContent->filter('figure > img')->attr("src");
+            $sports["titulo"] = $title;
+            $sports["img"] = $scrap->filter('figure > img')->attr("src");
             $sports["texto"] = json_encode($contentNew);
             $sports["diario"] = "imparcial";
             $sports["fecha"] = date("Y:m:d");
@@ -104,8 +109,8 @@ class ScrappingController extends Controller
             $sports["url"] = $enlace;
             $sports["region"] = "oaxaca";
             $sports["tipo"] = "secundarias";
-
-            var_dump($sports);
+            
+            // var_dump($sports);
             return $sports;
 
         });
@@ -114,7 +119,7 @@ class ScrappingController extends Controller
 
      public function imparcialHealth(Client $client) {
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/salud/');
-        $data = $crawler->filter('.news-post')->each(function($node) {
+        $data = $crawler->filter('.standard-post2')->each(function($node) {
             $health = array();
             $enlace = $node->filter(".post-title > h2 > a")->attr("href");
             $resumen_array = explode("Leer más", $node->filter(".post-content")->text("sin texto"));;
@@ -149,7 +154,7 @@ class ScrappingController extends Controller
 
      public function imparcialEconomy(Client $client) {
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/economia/');
-        $data = $crawler->filter('.news-post')->each(function($node) {
+        $data = $crawler->filter('.standard-post2')->each(function($node) {
             $economy = array();
             $enlace = $node->filter(".post-title > h2 > a")->attr("href");
             $resumen_array = explode("Leer más", $node->filter(".post-content")->text("sin texto"));;
@@ -174,9 +179,8 @@ class ScrappingController extends Controller
             $economy["region"] = "oaxaca";
             $economy["tipo"] = "secundarias";
 
-            return $economy;
-
             // var_dump($economy);
+            return $economy;
             // var_dump("<br>");
         });
 
@@ -246,12 +250,11 @@ class ScrappingController extends Controller
             $noticias["resumen"] = $resumen;
             $noticias["categoria"] = "Economia";
             $noticias["fecha"] = date("Y:m:d");
-            $noticias["diario"] = "el la verdad noticias";
+            $noticias["diario"] = "la verdad noticias";
             $noticias["hora"] = date("G:i:s");
             $noticias["tipo"] = "primarias";
             $noticias["url"] = $enlace;
             $noticias["region"] = "oaxaca";
-            // var_dump($noticias);
             return $noticias;
         });
         $this->insertData($data);
@@ -283,7 +286,7 @@ class ScrappingController extends Controller
             $sports["diario"] = "tmbinfo";
             $sports["hora"] = date("G:i:s");
             $sports["url"] = $enlace;
-            $sports["img"] = $image;
+            $sports["img"] = $scrap->filter('.single-post-thumb > img')->attr('src');
             $sports["region"] = "oaxaca";
             // var_dump($sports);
             return $sports;
@@ -355,7 +358,7 @@ class ScrappingController extends Controller
             $noticias["diario"] = "rioaxaca";
             $noticias["resumen"] = $resumen;
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
+            $noticias["img"] = $dataContent->filter('.entry-thumb')->attr('src');
             $noticias["categoria"] = "Reciente";
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "terciarias";
@@ -394,7 +397,7 @@ class ScrappingController extends Controller
             $noticias["diario"] = "encuentro";
             $noticias["resumen"] = $resumen;
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
+            $noticias["img"] = $url.''.$scrap->filter('.itemImage > a > img')->attr('src');
             $noticias["categoria"] = "Deportes";
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "terciarias";
@@ -432,7 +435,7 @@ class ScrappingController extends Controller
             $noticias["diario"] = "encuentro";
             $noticias["resumen"] = $resumen;
             $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
+            $noticias["img"] = $url.''.$scrap->filter('.itemImage > a > img')->attr('src');
             $noticias["categoria"] = "Economia";
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "terciarias";
@@ -444,7 +447,6 @@ class ScrappingController extends Controller
 
         $this->insertData($data);
     }
-
 
 
     public function oaxacaHealth(Client $client) {
@@ -470,7 +472,7 @@ class ScrappingController extends Controller
             $noticias["diario"] = "presslibre";
              $noticias["resumen"] = $resumen;
              $noticias["url"] = $enlace;
-            $noticias["img"] = $image;
+            $noticias["img"] = $scrap->filter('.attachment-colormag-featured-image')->attr('src');
             $noticias["categoria"] = "Salud";
              $noticias["region"] = "oaxaca";
              $noticias["tipo"] = "terciarias";

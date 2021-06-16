@@ -24,6 +24,6 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        Auth::logoutOtherdevices($currentPassword);
+        Auth::logout();;
     }
 }

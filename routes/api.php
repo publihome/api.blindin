@@ -78,3 +78,6 @@ Route::get('/health/{ubication}',[NoticiasPrincipales::class, 'HealthMobile']);
 Route::get('/economy/{ubication}',[NoticiasPrincipales::class, 'EconomyMobile']);
 Route::get('/sports/{ubication}',[NoticiasPrincipales::class, 'SportsMobile']);
 Route::get('/covid/{ubication}',[NoticiasPrincipales::class, 'CovidMobile']);
+
+
+

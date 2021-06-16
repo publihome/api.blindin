@@ -5,6 +5,14 @@
     display: none;
 }
 
+/* 
+.grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-area: 100%;
+} */
+
+
 .active {
     background: #0A5FC0;
     color: white;
@@ -127,6 +135,8 @@
     object-fit: fill;
 
 }
+
+
 
 .text-overlay{
     bottom: 0px;
