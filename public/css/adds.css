@@ -3,11 +3,14 @@
     height: 100%;
 }
 
-.add-bottom{
-    position: fixed;
-    bottom: 0px;
+.add-bottom {
+    position: fixed ;
+    width: 100%;
     height: 80px;
-    left: 30%;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid #000; */
 }
 
 .banner{
@@ -19,7 +22,7 @@
 
 
 /*    NAVBAR 2   */
-
+/* 
 .input-search{
     width: 350px;
     border-radius: 20px;
@@ -29,7 +32,7 @@
     background: var(--input);
     position: relative;
     margin-right: 10px;
-}
+} */
 
 .search-container{
     display: flex;

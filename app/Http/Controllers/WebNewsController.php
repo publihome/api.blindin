@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\NoticiasModel;
 use App\Models\publicidad;
+use Illuminate\Support\Facades\Artisan;
 
 class WebNewsController extends Controller
 {
@@ -21,6 +22,9 @@ class WebNewsController extends Controller
     }   
     
     public function Recientes(){
+        if(!file_exists(public_path('storage'))){
+            Artisan::call('storage:link');
+        }
         $data['addsTop'] = $this->publicidad->getAdds('top');
         $data['addsBottom'] = $this->publicidad->getAdds('down');
         $data['sectionName'] = "Recientes";

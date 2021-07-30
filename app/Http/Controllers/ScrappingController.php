@@ -9,7 +9,7 @@ use App\Models\NoticiasModel;
 class ScrappingController extends Controller
 {
     //
-        
+
         private $count = 0;
     public function __construct(){
         $db = new NoticiasModel;
@@ -38,7 +38,7 @@ class ScrappingController extends Controller
     }
 
     public function oaxaca2(Client $client){
-        
+
         $this->imparcial($client);
         $this->imparcialEconomy($client);
         $this->imparcialHealth($client);
@@ -49,17 +49,17 @@ class ScrappingController extends Controller
     public function imparcial(Client $client) {
         $crawler = $client->request('GET', 'https://imparcialoaxaca.mx/ultima-hora');
         $data = $crawler->filter(".article-post")->each(function($node) {
-            $noticias = array();         
+            $noticias = array();
             $resumen_array = explode("Leer más", $node->filter(".post-content")->text());
             $resumen = $resumen_array[0];
-            $enlace = $node->filter(".post-content > a")->attr("href"); 
+            $enlace = $node->filter(".post-content > a")->attr("href");
             $textoinfo = explode("]",$resumen);
             $client = new Client();
             $scrap = $client->request('GET', $enlace);
             $dataContent = $scrap->filter('.single-post-box');
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
-            });   
+            });
             $noticias["titulo"] = $dataContent->filter('.title-post > h1')->text();
             $noticias["img"] = $dataContent->filter('.size-full')->attr("src");
             $noticias["texto"] = json_encode($contentNew);
@@ -71,23 +71,22 @@ class ScrappingController extends Controller
             $noticias["url"] = $enlace;
             $noticias["region"] = "oaxaca";
             $noticias["tipo"] = "secundarias";
-             var_dump($resumen_array);
-             
-            
+
+
             return $noticias;
 
         });
         $this->insertData($data);
      }
 
-    //queda pendiente 
+    
 
      public function imparcialSports(Client $client) {
         $crawler = $client->request("GET", 'https://imparcialoaxaca.mx/super-deportivo/');
         $data = $crawler->filter('.article-post')->siblings()->each(function($node) {
-                       
+
             $sports = array();
-            
+
             $resumen = $node->filter(".post-tags")->text("sin texto");
             $enlace = $node->filter(".post-content > h2 > a")->attr("href");
             $title = $node->filter(".post-content > h2 > a")->text();
@@ -109,7 +108,7 @@ class ScrappingController extends Controller
             $sports["url"] = $enlace;
             $sports["region"] = "oaxaca";
             $sports["tipo"] = "secundarias";
-            
+
             // var_dump($sports);
             return $sports;
 
@@ -169,7 +168,7 @@ class ScrappingController extends Controller
             $economy["titulo"] = $dataContent->filter('.title-post > h1')->text();
             $economy["img"] = $dataContent->filter('.size-full')->attr("src");
             $economy["texto"] = json_encode($contentNew);
-            
+
             $economy["diario"] = "imparcial" ;
             $economy["fecha"] = date("Y:m:d");
             $economy["hora"] = date("G:i:s");
@@ -208,7 +207,7 @@ class ScrappingController extends Controller
             $noticias["titulo"] = $dataContent->filter('.post-title')->text();
             $noticias["img"] = $dataContent->filter('.size-medium')->attr("src");
             $noticias["texto"] = json_encode($contentNew);
-            
+
             $noticias["resumen"] = $resumen;
             $noticias["categoria"] = "Reciente";
             $noticias["fecha"] = date("Y:m:d");
@@ -224,7 +223,7 @@ class ScrappingController extends Controller
     }
 
 
-    
+
     public function rotativoEconomy(Client $client) {
         $crawler = $client->request('GET', 'https://laverdadnoticias.com/seccion/economia/');
         $data =  $crawler->filter('.news--252x142')->each(function($node) {
@@ -244,9 +243,9 @@ class ScrappingController extends Controller
             });
 
             $noticias["titulo"] = $title;
-            
+
             $noticias["img"] = $image;
-            $noticias["texto"] = json_encode($contentNew);           
+            $noticias["texto"] = json_encode($contentNew);
             $noticias["resumen"] = $resumen;
             $noticias["categoria"] = "Economia";
             $noticias["fecha"] = date("Y:m:d");
@@ -277,7 +276,7 @@ class ScrappingController extends Controller
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
-            $sports["texto"] = json_encode($contentNew);           
+            $sports["texto"] = json_encode($contentNew);
             $sports["tipo"] = "primarias";
             $sports["titulo"] = $title;
             $sports["resumen"] = $resumen;
@@ -351,7 +350,7 @@ class ScrappingController extends Controller
                 return  $textnew->filter('p')->text();
             });
 
-            $noticias["texto"] = json_encode($contentNew);           
+            $noticias["texto"] = json_encode($contentNew);
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -390,7 +389,7 @@ class ScrappingController extends Controller
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
-            $noticias["texto"] = json_encode($contentNew);           
+            $noticias["texto"] = json_encode($contentNew);
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -428,7 +427,7 @@ class ScrappingController extends Controller
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
-            $noticias["texto"] = json_encode($contentNew);   
+            $noticias["texto"] = json_encode($contentNew);
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -464,8 +463,8 @@ class ScrappingController extends Controller
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
-            $noticias["texto"] = json_encode($contentNew); 
-            
+            $noticias["texto"] = json_encode($contentNew);
+
             $noticias["hora"] = date("G:i:s");
             $noticias["fecha"] = date("Y:m:d");
             $noticias["titulo"] = $title;
@@ -503,7 +502,7 @@ class ScrappingController extends Controller
             $contentNew = $dataContentText->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
-            $noticias["texto"] = json_encode($contentNew); 
+            $noticias["texto"] = json_encode($contentNew);
             $noticias["diario"] = "imparcial";
             $noticias["titulo"] = $title;
             $noticias["fecha"] = date("Y:m:d");
@@ -528,7 +527,7 @@ class ScrappingController extends Controller
     public function insertData($newsData){
         $db = new NoticiasModel;
         $db->insertData($newsData);
-        
+
     }
 
 }

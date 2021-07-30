@@ -1,7 +1,7 @@
 <div class="col-lg-12 p-1 banner" id="contentAddTop"> 
     @foreach ($addsTop as $addTop)
         <a href="{{$addTop->url}} " class="">
-            <img src="{{asset('storage').'/'. $addTop->image}}" class="img-add"/>
+            <img src="{{asset('storage').'/'. $addTop->image}}" class="img-add" alt="publicidad"/>
         </a>
     @endforeach
 

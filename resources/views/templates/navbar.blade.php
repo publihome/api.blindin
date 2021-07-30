@@ -8,7 +8,6 @@
           <div
             class="button-menu fas fa-bars" id="btn-menu"
           >
-
           </div>
 
           <div class="btns-region">
@@ -34,35 +33,22 @@
         <div class="container">
           <ul class="navbar-ul">
             <div class="drop-menu">
-              <li class="navbar-li" id="recientes">
-                  <a href="{{url('/')}}">
-                    <i class="far fa-clock"></i>Recientes
-                  </a>
-              </li>
-              <li class="navbar-li" id="salud">
-                  <a href="{{url('/Salud')}}">
-                    <i class="fas fa-stethoscope"> </i>
-                    Salud
-                  </a>
-              </li>
-              <li class="navbar-li" id="economia">
-                  <a href="{{url('/Economia')}}">
-                    <i class="fas fa-dollar-sign"> </i>
-                    Economia
-                  </a>
-              </li>
-              <li class="navbar-li" id="deportes">
-                  <a href="{{url('/Deportes')}}">
-                    <i class="fas fa-basketball-ball"> </i>
-                    Deportes
-                  </a>
-              </li>
-              <li class="navbar-li" id="covid">
-                  <a href="{{url('/Covid')}}">
-                    <i class="fas fa-virus"></i>
-                    Covid
-                  </a>
-              </li>
+              <a href="{{url('/')}}" class="navbar-li" id="recientes">
+                     <span> <i class="far fa-clock"></i>Recientes</span>
+              </a>
+              <a href="{{url('/Salud')}}" class="navbar-li" id="salud">
+                    <span><i class="fas fa-stethoscope"> </i> Salud</span>
+              </a>
+              <a href="{{url('/Economia')}}" class="navbar-li" id="economia">
+                    <span><i class="fas fa-dollar-sign"> </i> Economia</span>
+              </a>
+              <a href="{{url('/Deportes')}}" class="navbar-li" id="deportes">
+                    <span><i class="fas fa-basketball-ball"> </i> Deportes</span>
+              </a>
+              <a href="{{url('/Covid')}}" class="navbar-li" id="covid">
+                    
+                    <span><i class="fas fa-virus"></i> Covid</span>
+              </a>
             </div>
           </ul>
         </div>
@@ -77,17 +63,15 @@
 
   {{-- buscador --}}
   <nav class="navbar-info">
-    <div class="container-lg container-md">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-            <ul>
+            <ul class="p-0">
                 <div class="search-container">
                     <input type="text" placeholder="Buscar" id="inputSearch" class="input-search"/>
-                    <button class="btn-search" id="btnSearch"><i class="fas fa-search"></i></button>
+                    <button class="btn-search" id="btnSearch" aria-label="search button"><i class="fas fa-search"></i></button>
                 </div>
                 <small class="text-warning bg-dark mt-2" id="textNoNews">
                 </small>
             </ul>
-        </div>
     </div>
     
 </nav>

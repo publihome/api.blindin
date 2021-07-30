@@ -12,22 +12,18 @@ class NoticiasModel extends Model
 
 
     public function insertData($newsData){
-        var_dump($newsData);
-        // exit;
-        if(isset($newsData)){
-            if(DB::table("noticias")->get() == ""){
-            DB::table('noticias')->insert($newsData);
-            }
+  
+        if(isset($newsData)){      
             foreach ($newsData as $not) {
-                # code...
-                if($not != "" and $not['texto'] != ""){
-                
+                if($not['img'] !== "without image" || $not['texto'] !== "[]" ){
                     if (DB::table('noticias')->where('titulo',$not["titulo"] )->doesntExist()) {
-                        $data = DB::table('noticias')->insert($not);
+                        DB::table('noticias')->insert($not);
                     }
+                }else{
+                    var_dump($not["img"]);
                 }
             }
-        }
+         }
     } 
 
     public function saveNew($new){

@@ -1,9 +1,9 @@
-@import '../app.css';
+/* @import '../styles.css'; */
 
 .navbar-head {
     display: flex;
     background: var(--white);
-    height: 81px;
+    height: 85px;
 }
 
 .logo{
@@ -29,6 +29,7 @@
     display: flex;
     margin: 0px;
     margin-left: auto;
+    margin-bottom: 2px;
 }
 
 .navbar-li-region{
@@ -37,12 +38,24 @@
     border: 1px solid var(--gray);
     background: var(--white);
 }
+
+.navbar-li-region:hover{
+    display: block;
+    padding: 5px;
+    border: 1px solid var(--gray);
+    background: var(--gray);
+}
+
+.navbar-li-region:active{
+    transform: scale(.95);
+
+}
+
 #oaxaca{
     border-bottom-left-radius: 12px;
     border-top-left-radius: 12px;
     padding: 5px;
     font-size: 14px;
-
 }
 
 #nacional{
@@ -54,7 +67,7 @@
 
 .btn-active-region{
     background: var(--gray);
-    border: none;
+    border: var(--grayblack);
 }
 
 .navbar {
@@ -75,9 +88,7 @@
 
 .drop-menu{
     display: contents;
-    
 }
-
 
 .navbar-li{
     text-decoration: none;
@@ -88,46 +99,33 @@
     justify-content: center;
 }
 
-
-.navbar-li  p{
-    padding: 5px 0px;
-    margin: 0;
-
-}
-
 .navbar-li  i{
     padding: 5px;
 
 }
 .navbar-li :hover{
-    /* padding: 5px 0px; */
-    margin: 0;
-    color: black;
-
+    margin-right: 10;
+    color: var(--white);
+    letter-spacing: 1px;
 }
 
-.navbar-li >p:hover{
-    cursor: pointer;
-    color: black ;
-}
-
-#recientes:hover{
+.navbar-li:first-child:hover{
     background: var(--recientesColor);
 }
 
-#salud:hover{
+.navbar-li:nth-child(2):hover{
     background: var(--saludColor);
 }
 
-#economia:hover{
+.navbar-li:nth-child(3):hover{
     background: var(--economiaColor);
 }
 
-#deportes:hover{
+.navbar-li:nth-child(4):hover{
     background: var(--deportesColor);
 }
 
-#covid:hover{
+.navbar-li:nth-child(5):hover{
     background: var(--covidColor);
 }
 
@@ -171,8 +169,8 @@
     border-radius: 20px;
     height: 35px;
     padding: 15px;
-    border: 1px solid var(--input);
-    background: var(--input);
+    border: 1px solid var(--gray);
+    /* background: var(--white); */
     position: relative;
     margin-right: 10px;
 }
@@ -196,8 +194,14 @@
     border: none;
     width: 30px;
     height: 30px;
+    background: var(--gray);
+}
+
+.btn-search:active{
+    transform: scale(.95);
 
 }
+
 
 .btn-search:hover{
     background: var(--gray);

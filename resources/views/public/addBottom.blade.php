@@ -1,7 +1,7 @@
-<div class="col-lg-12 p-1 add-bottom" id="contentAddBottom"> 
+<div class="p-1 add-bottom" id="contentAddBottom"> 
     @foreach ($addsBottom as $addBottom)
-        <a href="{{$addBottom->url}} " class="">
-            <img src="{{asset('storage').'/'. $addBottom->image}}" class="img-add"/>
+        <a href="{{$addBottom->url}}" class="">
+            <img src="{{asset('storage').'/'. $addBottom->image}}" class="img-add" alt="publicidad"/>
         </a>
     @endforeach
 

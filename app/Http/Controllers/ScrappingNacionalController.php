@@ -13,7 +13,7 @@ class ScrappingNacionalController extends Controller
     $this->periodicoDeMexicoRecientes($client);
     $this->jornadaDeportes($client);
     $this->PeriodicoDeMexicoEconomia($client);
-    $this->noticiasSalud($client);
+    // $this->noticiasSalud($client);
     $this->altoNivelRecientes($client);
     $this->altoNivelEconomia($client);
     $this->infoSalus($client);
@@ -56,7 +56,6 @@ class ScrappingNacionalController extends Controller
             $recientes["url"] = $enlace;
             $recientes["img"] = $image;
             $recientes["region"] = "nacional";
-            // var_dump($recientes);
             return $recientes;
         });
         $this->insertData($data);
@@ -65,18 +64,18 @@ class ScrappingNacionalController extends Controller
 
     public function jornadaDeportes(Client $client){
         $crawler = $client->request('GET', 'https://www.jornada.com.mx/category/deportes.html');
-        $data = $crawler->filter(".card-deportes")->each(function($node){
+        $data = $crawler->filter(".card-vertical")->each(function($node){
             $sports = array();
             $url = "https://www.jornada.com.mx";
             $title = $node->filter("h2 > a")->text();
             $enlace = $url . "" .$node->filter("h2 > a")->attr("href");
             $image_name = $node->filter("img")->attr("src");
-            $image = strpos($image_name, '/theme') === false ? $image_name : $url ."". $image_name;
+            $image = strpos($image_name, '/theme') === false ? $image_name : "without image";
             $resumen = $node->filter(".card-text > p")->text("sin resumen");
 
             $client = new Client();
             $scrap = $client->request('GET', $enlace);
-            $dataContent = $scrap->filter('.content_nitf');
+            $dataContent = $scrap->filter('#content_nitf');
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
             });
@@ -133,14 +132,14 @@ class ScrappingNacionalController extends Controller
     }
 
 
-
+/// no obtiene las imagenes checarla
     public function noticiasSalud(Client $client){
         $crawler = $client->request('GET', 'https://www.noticiasensalud.com/');
         $data = $crawler->filter(".infinite-post")->each(function($node){
             $health = array();
             $title = $node->filter("h2")->text();
             $enlace = $node->filter(" a")->attr("href");
-            $image = $node->filter("img")->attr("src");
+            $image = $node->filter(".reg-img")->attr("src");
             $resumen = $node->filter("p")->text();
 
             $client = new Client();
@@ -157,7 +156,7 @@ class ScrappingNacionalController extends Controller
             $health["resumen"] = $resumen;
             $health["categoria"] = "Salud";
             $health["url"] = $enlace;
-            $health["img"] = $image;
+            $health["img"] = $scrap->filter('#post-feat-img > img')->attr('srcset');
              $health["region"] = "nacional";
             $health["tipo"] = "primarias";
              return $health;
@@ -215,7 +214,6 @@ class ScrappingNacionalController extends Controller
 
             $client = new Client();
             $scrap = $client->request('GET', $enlace);
-            $dataContent = $scrap->filter('.content_note');
             $dataContentText = $scrap->filter('.content_note');
             $contentNew = $dataContentText->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
@@ -229,12 +227,9 @@ class ScrappingNacionalController extends Controller
             $economy["resumen"] = "";
             $economy["categoria"] = "Economia";
             $economy["url"] = $enlace;
-            $economy["img"] = $image;
-            // $economy["img"] = $dataContent->filter('img')->attr('src');
-
+            $economy["img"] = $scrap->filter('.principal >img ')->attr('data-src');
             $economy["region"] = "nacional";
             $economy["tipo"] = "terciarias";
-            // var_dump($economy);
             return $economy;
         });
 
@@ -264,10 +259,10 @@ class ScrappingNacionalController extends Controller
             $health["resumen"] = "";
             $health["categoria"] = "Salud";
             $health["url"] = $enlace;
-            $health["img"] = $image;
+            $health["img"] = $scrap->filter('#fotoPrincipalNoticia')->attr('src');
             $health["region"] = "nacional";
             $health["tipo"] = "terciarias";
-            //var_dump($health);
+            // var_dump($health);
 
              return $health;
         });
@@ -287,8 +282,8 @@ class ScrappingNacionalController extends Controller
             $image = $node->filter("img")->attr("src");
             $resumen = $node->filter('.summary')->text();
 
-            $client = new Client();
-            $scrap = $client->request('GET', $enlace);
+            $req = new Client();
+            $scrap = $req->request('GET', $enlace);
             $dataContent = $scrap->filter('.col-sm-8');
             $contentNew = $dataContent->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
@@ -301,7 +296,7 @@ class ScrappingNacionalController extends Controller
             $sport["resumen"] = $resumen ;
             $sport["categoria"] = "Deportes";
             $sport["url"] = $enlace;
-            $sport["img"] = $image;
+            $sport["img"] = $dataContent->filter('.media-object ')->attr('src');
             $sport["region"] = "nacional";
             $sport["tipo"] = "terciarias";
             // var_dump($sport);
@@ -357,10 +352,10 @@ class ScrappingNacionalController extends Controller
             $title = $node->filter("h2")->text("null");
             $enlace = $node->filter("a")->attr("href");
             // $resumen = $node->filter(".ultima-hora-summary")->text();
-            $image = $node->filter("img")->attr("src");
+            // $image = $node->filter("img")->attr("src");
             $client = new Client();
             $scrap = $client->request('GET', $enlace);
-            // $image = $scrap->filter('.img-container > img')->attr("src");
+            $image = $scrap->filter('.single-image')->attr("src");
             $dataContentText = $scrap->filter('.node-content');
             $contentNew = $dataContentText->filter('p')->each(function($textnew){
                 return  $textnew->filter('p')->text();
@@ -404,14 +399,14 @@ class ScrappingNacionalController extends Controller
             $health["texto"] = json_encode($contentNew);
             $health["diario"] = "El sol de mexico";
             $health["titulo"] = $title;
-             $health["fecha"] = date("Y:m:d");
-             $health["hora"] = date("G:i:s");
-             $health["resumen"] = $resumen;
-             $health["categoria"] = "Salud";
-             $health["url"] = $enlace;
-            $health["img"] = $image;
-             $health["region"] = "nacional";
-             $health["tipo"] = "secundarias";
+            $health["fecha"] = date("Y:m:d");
+            $health["hora"] = date("G:i:s");
+            $health["resumen"] = $resumen;
+            $health["categoria"] = "Salud";
+            $health["url"] = $enlace;
+            $health["img"] = $dataContent->filter('.media-object ')->attr('src');
+            $health["region"] = "nacional";
+            $health["tipo"] = "secundarias";
             // var_dump($health);
             return $health;
         });
@@ -430,7 +425,7 @@ class ScrappingNacionalController extends Controller
             $enlace = $url . "" .$node->filter(".title-default > a")->attr("href");
             $resumen = $node->filter(".card-text > p")->text("");
             $image_name = $node->filter("img")->attr("src");
-            $image = strpos($image_name, '/theme') === false ? $image_name : $url ."". $image_name;
+            $image = strpos($image_name, '/theme') === false ? $image_name : "without image";
             $client = new Client();
             $scrap = $client->request('GET', $enlace);
             $dataContent = $scrap->filter('.article-content');

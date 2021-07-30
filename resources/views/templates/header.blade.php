@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XE0D614GMQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XE0D614GMQ');
+    </script>
     
-    <title>Blindin</title>
+    <title id="title">Blindin</title>
     <link rel="icon" href="{{asset('storage/images/icon.png')}}" />
     <meta name="keywords" 
       content="blindin, noticias, blindin noticias, oaxaca, mexico, noticias oaxaca, noticias hoy, noticias recientes"
@@ -16,7 +26,7 @@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link  href="{{url('/css/navbar.css')}}" rel="stylesheet">
-    <link  href="{{url('/css/app.css')}}" rel="stylesheet">
+    <link  href="{{url('/css/styles.css')}}" rel="stylesheet">
     <link  href="{{url('/css/news.css')}}" rel="stylesheet">
     <link  href="{{url('/css/adds.css')}}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/b4026c7d61.js" crossorigin="anonymous"></script>

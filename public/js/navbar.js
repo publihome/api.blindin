@@ -10,7 +10,6 @@ $('#btn-menu').click(function(e){
   })
 
 function setRegion(reg = ""){
-    console.log(reg)
     if(reg != ""){
         if(reg != region ){
             document.querySelector('#content').innerHTML = "";       
@@ -27,8 +26,6 @@ function setRegion(reg = ""){
         document.getElementById(region).classList.add('btn-active-region')       
     }
       
-    console.log(news)
-    // region = reg   
     getData()
 }
 
@@ -65,16 +62,21 @@ function getSearchNews(word){
 document.querySelector('#inputSearch').addEventListener('click', function(e){
     document.querySelector('#textNoNews').innerHTML = ''
 
-
 })
+
+$inputSearch.addEventListener('keypress',(e) => {
+    if(e.key == "Enter"){
+        e.target.value != "" ? getSearchNews(e.target.value) : ""
+    }
+})
+
 
 window.btnSearch.addEventListener('click', function(e){
     e.preventDefault()
     $input = document.getElementById('inputSearch')
     if($input.value != ""){
-        
+        getSearchNews($input.value)
     }
-    getSearchNews($input.value)
 })
 
 setRegion()

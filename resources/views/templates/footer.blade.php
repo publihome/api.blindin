@@ -1,6 +1,6 @@
+</div>
 @include('public.addBottom')
 @include('public.modalNew')
-</div>
 <div class="loader"></div>
 
 <script src="{{url('/js/app.js')}}"></script>

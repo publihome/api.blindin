@@ -67,7 +67,7 @@ Route::get("/new/{id}",[NoticiasPrincipales::class, 'getNewById']);
 Route::get("/oaxaca",[ScrappingController::class, 'index']);
 Route::get("/oaxaca2",[ScrappingController::class, 'oaxaca2']);
 Route::get("/nacionales",[ScrappingNacionalController::class, 'index']);
-Route::get("/s",[ScrappingController::class, 'covidOax']);
+Route::get("/s",[ScrappingController::class, 'imparcialSports']);
 
 
 //urls to mobile

@@ -6,10 +6,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
-            <a class="nav-link {{ Request::is('admin') ? 'active' : ""}}" href="/admin">Dashboard</a>
-            <a class="nav-link {{ Request::is('admin/publicidad') ? 'active' : ""}}" href="/admin/publicidad">Publicidad</a>
-            <a class="nav-link {{ Request::is('admin/noticias') ? 'active' : ""}}" href="/admin/noticias">Noticias</a>
-            <a class="nav-link " href="/logout" >Salir</a>
+            {{-- <a class="nav-link {{ Request::is('admin') ? 'active' : ""}}" href="/admin"><i class="fas fa-chart-line"></i> Dashboard</a> --}}
+            <a class="nav-link {{ Request::is('admin/publicidad') ? 'active' : ""}}" href="/admin/publicidad"><i class="fas fa-columns"></i> Publicidad</a>
+            <a class="nav-link {{ Request::is('admin/noticias') ? 'active' : ""}}" href="/admin/noticias"><i class="far fa-newspaper"></i> Noticias</a>
+            <a class="nav-link " href="{{url('/logout')}}" ><i class="fas fa-sign-out-alt"></i> Salir</a>
         </div>
         </div>
     </div>

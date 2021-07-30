@@ -1,7 +1,7 @@
 @include('templates.header')
 @include('templates.navbar')
 
-<div class="row" id="content">
+<div class="grid" id="content">
 
 </div>
 
