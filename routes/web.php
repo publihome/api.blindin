@@ -31,26 +31,23 @@ use App\Http\Controllers\NoticiasController;
 /********** P U B L I C I D A D *************** */
 
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'loginValidate']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // administrador
 
 
-Route::get('/admin', [AdminController::class, 'index']);
-Route::resource('/admin/noticias', NoticiasController::class);
-// Route::get('/admin/noticias/agregar', [NoticiasController::class, 'add']);
-// Route::post('/admin/noticias/guardar', [NoticiasController::class, 'store']);
+Route::get('/admin', [AdminController::class, 'index'])->middleware('auth');
+Route::resource('/admin/noticias', NoticiasController::class)->middleware('auth');
 
 
 // Publicidad
-
-Route::get('/admin/publicidad', [PublicidadController::class, 'index']);
-Route::post('/admin/addPublicidad', [PublicidadController::class, 'store']);
-Route::delete('/admin/deletePublicidad/{id}', [PublicidadController::class, 'destroy']);
-Route::get('/admin/editPublicidad/{id}', [PublicidadController::class, 'edit']);
-Route::patch('/admin/updatePublicidad/{id}', [PublicidadController::class, 'update']);
+Route::get('/admin/publicidad', [PublicidadController::class, 'index'])->middleware('auth');
+Route::post('/admin/addPublicidad', [PublicidadController::class, 'store'])->middleware('auth');
+Route::delete('/admin/deletePublicidad/{id}', [PublicidadController::class, 'destroy'])->middleware('auth');
+Route::get('/admin/editPublicidad/{id}', [PublicidadController::class, 'edit'])->middleware('auth');
+Route::patch('/admin/updatePublicidad/{id}', [PublicidadController::class, 'update'])->middleware('auth');
 
 
 
